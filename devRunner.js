@@ -1,12 +1,13 @@
-/*eslint no-console: 0*/
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import SingleChild from 'single-child';
 import UrlResolver from 'url';
 import request from 'request';
 
-import webpackBEConfig from './webpack/webpack.backend.config.js';
-import webpackFEConfig from './webpack/webpack.frontend.config.js';
+import webpackBEConfig from './webpack/webpack.backend.config.babel.js';
+import webpackFEConfig from './webpack/webpack.frontend.config.babel.js';
+
+process.on('uncaughtException', err => console.error(err));
 
 const SERVER_BASE = 'http://localhost';
 const CLIENT_PORT = 3000;
@@ -14,15 +15,17 @@ const API_PORT = 3001;
 
 let server = null;
 
-const getDevelopmentWebpackBEConfig = webpackConfig => {
-  return {
-    ...webpackConfig,
-    debug: true,
-    watch: true,
-    devtool: 'sourcemap',
-    inline: true
-  };
-};
+const getDevelopmentWebpackBEConfig = webpackConfig => ({
+  ...webpackConfig,
+  output: {
+    ...webpackConfig.output,
+    filename: 'server-dev.js'
+  },
+  debug: true,
+  watch: true,
+  devtool: 'sourcemap',
+  inline: true
+});
 
 const getDevelopmentWebpackFEConfig = webpackConfig => {
   const config = {
@@ -33,7 +36,7 @@ const getDevelopmentWebpackFEConfig = webpackConfig => {
       `webpack-dev-server/client?${SERVER_BASE}:${CLIENT_PORT}`,
       'webpack/hot/only-dev-server', ...webpackConfig.entry
     ],
-    plugins: [new webpack.HotModuleReplacementPlugin()]
+    plugins: [...webpackConfig.plugins, new webpack.HotModuleReplacementPlugin()]
   };
   config.output.publicPath = `${SERVER_BASE}:${CLIENT_PORT}/`;
   return config;
@@ -70,9 +73,9 @@ webpack(getDevelopmentWebpackBEConfig(webpackBEConfig), (err, stats) => {
 
   if (!server) {
     console.info('Starting dev runner');
-    server = new SingleChild('node', ['dist/server.js'], {
+    server = new SingleChild('node', ['dist/server-dev.js'], {
       stdio: [0, 1, 2],
-      env: {...process.env, NODE_ENV: 'development', PORT: API_PORT}
+      env: { ...process.env, NODE_ENV: 'development', PORT: API_PORT }
     });
     server.start();
   } else {
@@ -82,7 +85,7 @@ webpack(getDevelopmentWebpackBEConfig(webpackBEConfig), (err, stats) => {
 });
 
 const app = new WebpackDevServer(webpack(getDevelopmentWebpackFEConfig(webpackFEConfig)), {
-  contentBase: './dist/client',
+  contentBase: false, // We don't want to serve ANY content here, since everything is proxied
   publicPath: '/',
   quiet: false,
   noInfo: false,
@@ -105,7 +108,8 @@ app.use('/', (req, res) => {
   req
     .pipe(request(targetUrl))
     .on('error', e => {
-      console.error(`Problems with proxy. Make sure API is running on ${SERVER_BASE}:${API_PORT}`, e);
+      console.error(
+        `Problems with proxy. Make sure API is running on ${SERVER_BASE}:${API_PORT}`, e);
       res
         .status(500)
         .send(e);
