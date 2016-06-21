@@ -27,6 +27,9 @@ Navigate your browser to http://localhost:3000/
 
 ## Development
 ```
+export NODE_ENV=development
+export API_BASE=http://localhost:3000
+export PORT=3001
 npm run start:dev
 ```
 Navigate your browser to http://localhost:3000/
@@ -35,12 +38,16 @@ Navigate your browser to http://localhost:3000/
 First start dev server:
 
 ```
+export NODE_ENV=development
+export API_BASE=http://localhost:3000
+export PORT=3001
 npm run start:dev
 ```
 
 Then start native dev server:
 
 ```
+export API_BASE=http://localhost:3000
 npm run start:native
 ```
 
@@ -132,5 +139,5 @@ This is a brief description what we depend on and why:
 * `redux` - State container
 * `redux-react` React binding for Redux
 * `react-router-redux` - React Router binding for Redux
-* `redux-elm` - **The best library ever**
+* `redux-elm` - The Elm Architecture in JavaScript
 * `redux-saga` - Side Effects & Long Running Transactions for Redux
