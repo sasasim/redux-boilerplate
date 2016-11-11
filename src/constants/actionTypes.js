@@ -1,0 +1,7 @@
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+
+export const SAY_HELLO = 'SAY_HELLO';
+export const USER_FETCHED = 'USER_FETCHED';
+
+export const ENTITY_REPOSITORY_HAS_CHANGED = 'ENTITY_REPOSITORY_HAS_CHANGED';
