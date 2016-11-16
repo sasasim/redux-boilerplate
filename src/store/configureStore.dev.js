@@ -15,9 +15,7 @@ export default function configureStore() {
         sagaMiddleware,
           createLogger()
       ),
-      window.devToolsExtension ? // eslint-disable-line no-undef
-        window.devToolsExtension() : // eslint-disable-line no-undef
-        value => value
+      window.devToolsExtension ? window.devToolsExtension() : value => value
     )
   );
 
