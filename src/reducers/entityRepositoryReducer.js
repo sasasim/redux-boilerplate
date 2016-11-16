@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 
-import * as ActionTypes from '../constants/actionTypes';
+import * as ActionTypes from 'constants/actionTypes';
 
 const initialState = {
   User: {},

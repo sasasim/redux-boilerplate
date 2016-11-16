@@ -2,27 +2,20 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pkg = require('../package.json');
+const shared = require('./shared.js');
 
 const bundleName = `${pkg.name}-${pkg.version}.min.js`;
 const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
 
 module.exports = {
   devtool: 'sourcemap',
-  entry: './src/index.jsx',
+  entry: shared.entry,
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: `/${bundleName}`
   },
-  module: {
-    loaders: [{
-      test: /\.jsx$|\.js$/,
-      loaders: ['babel'],
-      include: path.resolve(__dirname, '../src')
-    }]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
+  module: shared.module,
+  resolve: shared.resolve,
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,

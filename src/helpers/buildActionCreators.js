@@ -1,4 +1,4 @@
-import buildAction from './buildAction';
+import buildAction from 'helpers/buildAction';
 
 export default actions => Object
   .keys(actions)

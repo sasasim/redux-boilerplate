@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { map } from 'lodash';
 
-import { getEntityRepository as getState } from './';
+import { getEntityRepository as getState } from 'selectors';
 
 export const getCountries = createSelector(
   getState,

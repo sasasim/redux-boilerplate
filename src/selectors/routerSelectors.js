@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getRouter as getState } from './';
+import { getRouter as getState } from 'selectors';
 
 export const getHistory = createSelector(
   getState,

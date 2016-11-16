@@ -2,8 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
-import reducer from '../reducers';
-import saga from '../sagas';
+import reducer from 'reducers';
+import saga from 'sagas';
 
 const isProduction = () => process.env.NODE_ENV === 'production';
 

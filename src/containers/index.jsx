@@ -7,12 +7,12 @@ import {
 } from 'react-router';
 import Router from 'react-router-addons-controlled/ControlledBrowserRouter';
 
-import Counter from './CounterContainer';
-import HelloUser from './HelloUserContainer';
-import NotFound from '../components/NotFound';
-import buildActionCreators from '../helpers/buildActionCreators';
-import * as ActionTypes from '../constants/actionTypes';
-import * as RouterSelectors from '../selectors/routerSelectors';
+import Counter from 'containers/CounterContainer';
+import HelloUser from 'containers/HelloUserContainer';
+import NotFound from 'components/NotFound';
+import buildActionCreators from 'helpers/buildActionCreators';
+import * as ActionTypes from 'constants/actionTypes';
+import * as RouterSelectors from 'selectors/routerSelectors';
 
 const Index = ({
   history,

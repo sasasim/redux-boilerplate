@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pkg = require('../package.json');
+const shared = require('./shared.js');
 
 const bundleName = `${pkg.name}-${pkg.version}.js`;
 const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
@@ -12,22 +13,14 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './src/index.jsx'
+    shared.entry
   ],
   output: {
     path: path.resolve(__dirname, '../'),
     filename: `/${bundleName}`
   },
-  module: {
-    loaders: [{
-      test: /\.jsx$|\.js$/,
-      loaders: ['babel'],
-      include: path.resolve(__dirname, '../src')
-    }]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
+  module: shared.module,
+  resolve: shared.resolve,
   devServer: {
     port: 3000 || process.env.PORT,
     inline: true,

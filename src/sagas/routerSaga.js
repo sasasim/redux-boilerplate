@@ -1,8 +1,8 @@
 import { put, fork } from 'redux-saga/effects';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import buildAction from '../helpers/buildAction';
-import * as ActionTypes from '../constants/actionTypes';
+import buildAction from 'helpers/buildAction';
+import * as ActionTypes from 'constants/actionTypes';
 
 function* init() {
   const history = createBrowserHistory();

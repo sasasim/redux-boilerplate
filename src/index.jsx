@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Index from './containers';
-import buildStore from './store';
+import Index from 'containers';
+import buildStore from 'store';
 
 const store = buildStore();
 
