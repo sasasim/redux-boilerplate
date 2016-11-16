@@ -1,3 +1,4 @@
+/* global devToolsExtension */
 import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -9,17 +10,16 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
-  let store;
+  let enhancer;
   if (isProduction) {
-    store = createStore(reducer, applyMiddleware(sagaMiddleware));
+    enhancer = applyMiddleware(sagaMiddleware);
   } else {
-    const enhancer = applyMiddleware(sagaMiddleware, createLogger());
-    store = createStore(reducer,
-      window.devToolsExtension
-      ? compose(enhancer, window.devToolsExtension())
-      : enhancer
-    );
+    enhancer = applyMiddleware(sagaMiddleware, createLogger());
+    if (window.devToolsExtension) {
+      enhancer = compose(enhancer, devToolsExtension());
+    }
   }
+  const store = createStore(reducer, enhancer);
   sagaMiddleware.run(saga);
   if (!isProduction && module.hot) {
     module.hot.accept('./reducers', () => {
