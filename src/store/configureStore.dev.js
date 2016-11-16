@@ -5,40 +5,23 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from '../reducers';
 import saga from '../sagas';
 
-const isProduction = () => process.env.NODE_ENV === 'production';
+export default function configureStore() {
+  const sagaMiddleware = createSagaMiddleware();
 
-const buildStore = (sagaMiddleware) => {
-  if (isProduction()) {
-    return createStore(
-      reducer,
-      compose(
-        applyMiddleware(
-          sagaMiddleware,
-        )
-      )
-    );
-  }
-
-  return createStore(
+  const store = createStore(
     reducer,
     compose(
       applyMiddleware(
         sagaMiddleware,
           createLogger()
       ),
-      window.devToolsExtension ?
-        window.devToolsExtension() :
-        value => value
+      window.devToolsExtension ? window.devToolsExtension() : value => value
     )
   );
-};
 
-export default function configureStore() {
-  const sagaMiddleware = createSagaMiddleware();
-  const store = buildStore(sagaMiddleware);
   sagaMiddleware.run(saga);
 
-  if (!isProduction() && module.hot) {
+  if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers').default; // eslint-disable-line global-require
 
