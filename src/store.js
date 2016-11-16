@@ -22,7 +22,7 @@ export default function configureStore() {
   }
   sagaMiddleware.run(saga);
   if (!isProduction && module.hot) {
-    module.hot.accept('../reducers', () => {
+    module.hot.accept('./reducers', () => {
       // eslint-disable-next-line global-require
       store.replaceReducer(require('./reducers').default);
     });
