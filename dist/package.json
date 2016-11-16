@@ -1,0 +1,10 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "spa-serve"
+  },
+  "dependencies": {
+    "spa-serve": "^1.0.8"
+  }
+}
