@@ -2864,7 +2864,14 @@ react-redux@^4.4.5:
     lodash "^4.2.0"
     loose-envify "^1.1.0"
 
-react-router@next:
+react-router-addons-controlled:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-router-addons-controlled/-/react-router-addons-controlled-0.0.1.tgz#b63ca78640e4ef3b24ede9d802376f7b8317d375"
+  dependencies:
+    history "^4.3.0"
+    react-router "^4.0.0-alpha.4"
+
+react-router@^4.0.0-alpha.4, react-router@next:
   version "4.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.0.0-alpha.5.tgz#9d80514f9bbbec040dffbd4f9cf241da2830e318"
   dependencies:
