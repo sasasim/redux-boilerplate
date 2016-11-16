@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const pkg = require('../package.json');
 
+const bundleName = `${pkg.name}-${pkg.version}.min.js`;
 const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
 
 module.exports = {
@@ -9,7 +11,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'app.bundle.js'
+    filename: `/${bundleName}`
   },
   module: {
     loaders: [{
