@@ -1,6 +1,7 @@
 {
   "env": {
-    "browser": 1
+    "browser": true,
+    "jest": true
   },
   "extends": "airbnb",
   "rules": {

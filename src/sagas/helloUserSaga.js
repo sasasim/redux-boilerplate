@@ -7,9 +7,9 @@ import * as ApiEffects from 'effects/api';
 import * as EntityRepositorySaga from 'sagas/entityRepositorySaga';
 import * as Schema from '../schema';
 
-function* onSayHello() {
+export function* onSayHello() {
   const user = yield call(ApiEffects.fetchUser);
-  const userId = yield EntityRepositorySaga.store(user, Schema.UserSchema);
+  const userId = yield call(EntityRepositorySaga.store, user, Schema.UserSchema);
   yield put(buildAction(ActionTypes.USER_FETCHED, userId));
 }
 

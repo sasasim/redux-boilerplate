@@ -4,7 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import buildAction from 'helpers/buildAction';
 import * as ActionTypes from 'constants/actionTypes';
 
-function* init() {
+export function* init() {
   const history = createBrowserHistory();
 
   yield put(buildAction(ActionTypes.ROUTER_INIT, {
