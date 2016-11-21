@@ -10,6 +10,11 @@ module.exports = {
       test: /\.jsx$|\.js$/,
       loaders: ['babel'],
       include: path.resolve(__dirname, '../src')
+    }, {
+      id: 'style',
+      test: /\.styl$/,
+      loader: 'style!css!autoprefixer!stylus',
+      include: path.resolve(__dirname, '../src')
     }]
   }
 };

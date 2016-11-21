@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 
+import 'components/counter.styl';
+
 const Counter = ({ value, onDecrement, onIncrement }) => (
-  <div>
+  <div className="counter">
     <button onClick={onDecrement}>-</button>
     <span>{value}</span>
     <button onClick={onIncrement}>+</button>

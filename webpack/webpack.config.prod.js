@@ -1,10 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pkg = require('../package.json');
 const shared = require('./shared.js');
 
-const bundleName = `${pkg.name}-${pkg.version}.min.js`;
+const appName = `${pkg.name}-${pkg.version}`;
+const jsBundleName = `${appName}.min.js`;
+const cssBundleName = `${appName}.min.css`;
 const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
 
 module.exports = {
@@ -12,9 +15,19 @@ module.exports = {
   entry: shared.entry,
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: `/${bundleName}`
+    filename: `/${jsBundleName}`
   },
-  module: shared.module,
+  module: Object.assign({}, shared.module, {
+    loaders: shared.module.loaders.map((loader) => {
+      if (loader.id === 'style') {
+        return Object.assign({}, loader, {
+          loader: ExtractTextPlugin.extract('style', loader.loader.replace('style', ''))
+        });
+      }
+
+      return loader;
+    })
+  }),
   resolve: shared.resolve,
   plugins: [
     new HtmlWebpackPlugin({
@@ -48,6 +61,7 @@ module.exports = {
         comments: false,
         screw_ie8: true
       }
-    })
+    }),
+    new ExtractTextPlugin(cssBundleName)
   ]
 };
