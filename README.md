@@ -32,6 +32,27 @@ Obviously the heart of rendering is `react`. The goal is to keep `react` as very
 
 You are strongly encouraged to read & use this styleguide, feel free to file an issue if you disagree with some rule, or you feel like adding a new one.
 
+### Files & folders
+1. Prefer pre-defined directory structure, which is flat, we don't want nested folders because it makes reasoning about imports much more difficult
+2. File name must be unique across the whole project, it's good practice to add suffix of file type eg. `counterSaga` and `counterReducer`
+3. Use `index.js` filename for root entities (eg. root saga, root reducer etc.) because all the entities technically form a tree with its root
+4. Only classes or `React` Components (keep in mind that Container is also `React` Component) can have first letter upper-cased in the name of its file
+
+### Imports
+```
+import library from 'library';
+import nextLibrary, { namedStuffFromNextLibrary } from 'next-library';
+import { namedStuffFromLibrary } from 'another-library';
+
+import DefaultImport from 'components/Component';
+import * as ActionTypes from 'constants/actionTypes';
+import * as Whatever from 'whatever/whatever';
+```
+
+1. Prefer wildcard imports over named, because it namespaces those variables in the scope
+2. Use aliases instead of relative imports
+3. If possible order group of imports alphabetically by path, not import name
+
 ### React Components
 1. Keep all your `react` components within `src/components` folder, use `.js` suffix even though you are technically using JSX.
 
@@ -77,6 +98,9 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 3. Try to logically group `actionTypes` together by using empty lines as visual separators
 4. Might even be a good idea to annotate the group by comment
 
+### Containers
+
+
 ## Build
 
 ## Deployment
@@ -90,3 +114,8 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 ## Questions
 
 1. Should we rather prefer React classes over stateless-functions? At the moment, there's no performance benefit when using stateless functions and in fact, statelss function does not even implement pure rendering, therefore the only option to use `shouldComponentUpdate` is to wrap the stateless function into stateful component
+
+2. Is the flat directory structure good fit for large projects? Does it scale well? Should we somehow namespace it at some point?
+
+3. Do we want to use `index.js` filenames?
+
