@@ -39,7 +39,7 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 4. Only classes or `React` Components (keep in mind that Container is also `React` Component) can have first letter upper-cased in the name of its file
 
 ### Imports
-```
+```javascript
 import library from 'library';
 import nextLibrary, { namedStuffFromNextLibrary } from 'next-library';
 import { namedStuffFromLibrary } from 'another-library';
