@@ -66,9 +66,16 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 
 9. Fear not of splitting Component into many sub components when the Component become way too complex, keep them in the same file if it makes sense, otherwise you can make it generic and abstract it away to separate exported `Component`.
 
-10. Never ever use `bind` or lambda functions in event handlers, they create new reference with *each render*! Of course an exception is when you need to pass an argument (eg. index of item which has been clicked), however think twice if that's really the case.
+10. Never ever use `bind` or lambda functions in event handlers, they create new reference with **each render**! Of course an exception is when you need to pass an argument (eg. index of item which has been clicked), however think twice if that's really the case.
 
 11. Fear not of using stateful components if it makes sense (simple UI state, component lifecycle, heavy DOM manipulation)
+
+### Constants
+
+1. Use uppercase convention for all the constants
+2. Action types are always called `actionTypes` not `actions`!
+3. Try to logically group `actionTypes` together by using empty lines as visual separators
+4. Might even be a good idea to annotate the group by comment
 
 ## Build
 
