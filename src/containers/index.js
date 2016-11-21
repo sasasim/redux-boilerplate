@@ -27,7 +27,7 @@ const Index = ({
     onChange={onChangeRoute}
   >
     <div>
-      <h1>CRAP</h1>
+      <h1>redux-boilerplate</h1>
       <nav>
         <Link to="/counter">Counter</Link>&nbsp;|&nbsp;
         <Link to="/hello-user">Hello User</Link>
