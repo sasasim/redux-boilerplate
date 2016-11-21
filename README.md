@@ -30,8 +30,11 @@ Obviously the heart of rendering is `react`. The goal is to keep `react` as very
 
 ## Styleguide
 
+You are strongly encouraged to read & use this styleguide, feel free to file an issue if you disagree with some rule, or you feel like adding a new one.
+
 ### React Components
 1. Keep all your `react` components within `src/components` folder, use `.js` suffix even though you are technically using JSX.
+
 2. Always name your component before exporting, therefore prefer this:
   ```javascript
   import React from 'react';
@@ -57,6 +60,15 @@ Obviously the heart of rendering is `react`. The goal is to keep `react` as very
 
 6. Fear not [Short-circuit evaluation](https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Operators/Logical_Operators#Short-circuit_evaluation)
 
+7. Import `React` first, then define the component, then specify PropTypes and as the last step do default export
+
+8. Always use `default` exports for Components
+
+9. Fear not of splitting Component into many sub components when the Component become way too complex, keep them in the same file if it makes sense, otherwise you can make it generic and abstract it away to separate exported `Component`.
+
+10. Never ever use `bind` or lambda functions in event handlers, they create new reference with *each render*! Of course an exception is when you need to pass an argument (eg. index of item which has been clicked), however think twice if that's really the case.
+
+11. Fear not of using stateful components if it makes sense (simple UI state, component lifecycle, heavy DOM manipulation)
 
 ## Build
 
