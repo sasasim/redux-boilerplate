@@ -33,22 +33,21 @@ Obviously the heart of rendering is `react`. The goal is to keep `react` as very
 ### React Components
 1. Keep all your `react` components within `src/components` folder, use `.js` suffix even though you are technically using JSX.
 2. Always name your component before exporting, therefore prefer this:
+  ```javascript
+  import React from 'react';
 
-```javascript
-import React from 'react';
+  const MyComponent = () => <div>Hello World</div>;
+  export default MyComponent;
+  ```
 
-const MyComponent = () => <div>Hello World</div>;
-export default MyComponent;
-```
+  over this:
+  ```javascript
+  import React from 'react';
 
-over this:
-```javascript
-import React from 'react';
+  export default () => <div>Hello World</div>;
+  ```
 
-export default () => <div>Hello World</div>;
-```
-
-There are two reasons: the component will have a name in `react` devtools and it's much easier to add proptypes later even when the component does not currently accept any props.
+  There are two reasons: the component will have a name in `react` devtools and it's much easier to add proptypes later even when the component does not currently accept any props.
 
 3. Always specify PropTypes and be as specific as possible, therefore using of `PropTypes.object` or `PropTypes.array` is banned, use `PropTypes.shape` and `PropTypes.arrayOf` instead.
 
