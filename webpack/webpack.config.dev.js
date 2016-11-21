@@ -9,7 +9,7 @@ const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
 
 module.exports = {
   debug: true,
-  devtool: 'eval',
+  devtool: 'sourcemap',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
