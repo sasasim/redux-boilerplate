@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 
-import buildReducer from 'helpers/buildReducer';
+import createReducer from 'helpers/createReducer';
 import * as ActionTypes from 'constants/actionTypes';
 
 const initialState = {
@@ -8,6 +8,6 @@ const initialState = {
   Country: {}
 };
 
-export default buildReducer({
+export default createReducer({
   [ActionTypes.ENTITY_REPOSITORY_HAS_CHANGED]: (state, payload) => merge({}, state, payload)
 }, initialState);

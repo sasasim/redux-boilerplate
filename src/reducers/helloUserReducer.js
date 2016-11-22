@@ -1,4 +1,4 @@
-import buildReducer from 'helpers/buildReducer';
+import createReducer from 'helpers/createReducer';
 import * as ActionTypes from 'constants/actionTypes';
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
   user: null
 };
 
-export default buildReducer({
+export default createReducer({
   [ActionTypes.SAY_HELLO]: state => ({ ...state, greeted: true }),
   [ActionTypes.USER_FETCHED]: (state, user) => ({ ...state, user })
 }, initialState);

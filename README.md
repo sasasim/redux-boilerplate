@@ -155,6 +155,9 @@ import * as Whatever from 'whatever/whatever';
     )(ControlledTextField)
   ```
 
+### Reducers
+1. Prefer `objects` over primitive types as state
+
 ## Build
 
 ## Deployment
