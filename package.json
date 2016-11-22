@@ -24,12 +24,14 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
-    "react-router": "next",
-    "react-router-addons-controlled": "^0.0.1",
+    "react-router5": "^4.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
+    "redux-router5": "^4.2.3",
     "redux-saga": "^0.12.1",
-    "reselect": "^2.5.4"
+    "reselect": "^2.5.4",
+    "router5": "^4.3.4",
+    "router5.helpers": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

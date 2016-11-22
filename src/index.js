@@ -1,15 +1,20 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router5';
 
 import Index from 'containers';
+import createRouter from 'router';
 import buildStore from 'store';
 
-const store = buildStore();
+const router = createRouter();
+const store = buildStore(router);
 
-render(
+router.start(() => render(
   <Provider store={store}>
-    <Index />
+    <RouterProvider router={router}>
+      <Index />
+    </RouterProvider>
   </Provider>,
   document.getElementById('root')
-);
+));

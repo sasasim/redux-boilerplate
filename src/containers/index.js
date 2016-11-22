@@ -1,72 +1,51 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {
-  Match,
-  Miss,
-  Link
-} from 'react-router';
-import Router from 'react-router-addons-controlled/ControlledBrowserRouter';
+import { routeNodeSelector } from 'redux-router5';
+import { startsWithSegment } from 'router5.helpers';
 
 import Counter from 'containers/CounterContainer';
 import HelloUser from 'containers/HelloUserContainer';
+import Link from 'components/Link';
 import NotFound from 'components/NotFound';
-import buildActionCreators from 'helpers/buildActionCreators';
-import * as ActionTypes from 'constants/actionTypes';
-import * as RouterSelectors from 'selectors/routerSelectors';
+import * as Routes from 'constants/routes';
 
-const Index = ({
-  history,
-  location,
-  action,
-  onChangeRoute
-}) => (
-  <Router
-    history={history}
-    location={location}
-    action={action}
-    onChange={onChangeRoute}
-  >
+const renderContent = (testRoute) => {
+  if (testRoute(Routes.COUNTER) || testRoute(Routes.INDEX)) {
+    return <Counter />;
+  } else if (testRoute(Routes.HELLO_USER)) {
+    return <HelloUser />;
+  }
+
+  return <NotFound />;
+};
+
+const Index = ({ route: { name } }) => {
+  const testRoute = startsWithSegment(name);
+
+  return (
     <div>
       <h1>redux-boilerplate</h1>
       <nav>
-        <Link to="/counter">Counter</Link>&nbsp;|&nbsp;
-        <Link to="/hello-user">Hello User</Link>
+        <Link name={Routes.COUNTER}>Counter</Link>&nbsp;|&nbsp;
+        <Link name={Routes.HELLO_USER}>Hello User</Link>
       </nav>
       <div>
-        <Match exactly pattern="/" component={Counter} />
-        <Match exactly pattern="/counter" component={Counter} />
-        <Match exactly pattern="/hello-user" component={HelloUser} />
-        <Miss component={NotFound} />
+        {renderContent(testRoute)}
       </div>
     </div>
-  </Router>
-);
+  );
+};
 
-// We don't need to know exact shape of router stuff
-// because it's being consumed by react-router and
-// the interface is therefore encapsulated
 Index.propTypes = {
-  location: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  action: PropTypes.string,
-  history: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  onChangeRoute: PropTypes.func.isRequired
+  route: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = state => ({
-  history: RouterSelectors.getHistory(state),
-  location: RouterSelectors.getLocation(state),
-  action: RouterSelectors.getAction(state)
+  ...routeNodeSelector()(state)
 });
 
 export default connect(
-  mapStateToProps,
-  buildActionCreators({
-    onChangeRoute: ActionTypes.CHANGE_ROUTE,
-  }),
-  (stateProps, dispatchProps, ownProps) => ({
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    onChangeRoute: (location, action) => dispatchProps.onChangeRoute({ location, action })
-  })
+  mapStateToProps
 )(Index);

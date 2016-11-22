@@ -2,19 +2,27 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { router5Middleware } from 'redux-router5';
 
 import reducer from 'reducers';
 import saga from 'sagas';
+import isProduction from 'helpers/isProduction';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-export default function configureStore() {
+export default function configureStore(router) {
   const sagaMiddleware = createSagaMiddleware();
+
   let enhancer;
   if (isProduction) {
-    enhancer = applyMiddleware(sagaMiddleware);
+    enhancer = applyMiddleware(
+      router5Middleware(router),
+      sagaMiddleware
+    );
   } else {
-    enhancer = applyMiddleware(sagaMiddleware, createLogger());
+    enhancer = applyMiddleware(
+      router5Middleware(router),
+      sagaMiddleware,
+      createLogger()
+    );
     if (window.devToolsExtension) {
       enhancer = compose(enhancer, devToolsExtension());
     }
