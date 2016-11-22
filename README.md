@@ -152,7 +152,7 @@ import * as Whatever from 'whatever/whatever';
         ...dispatchProps,
         onChange: ev => dispatchProps.onChange(ev.target.value)
       })
-    )
+    )(ControlledTextField)
   ```
 
 ## Build
