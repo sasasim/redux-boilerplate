@@ -1,9 +1,8 @@
-export default (actionHandlers, initialState) => {
-  const actionKeys = Object.keys(actionHandlers);
+export default (actionHandlers, initialState) =>
+  (state = initialState, { type, payload }) => {
+    if (actionHandlers[type]) {
+      return actionHandlers[type](state, payload);
+    }
 
-  return (state = initialState, { type, payload }) => actionKeys
-      .filter(actionType => actionType === type)
-      .reduce((currentState, actionType) =>
-        actionHandlers[actionType](currentState, payload), state);
-};
-
+    return state;
+  };
