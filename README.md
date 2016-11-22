@@ -91,6 +91,8 @@ import * as Whatever from 'whatever/whatever';
 
 11. Fear not of using stateful components if it makes sense (simple UI state, component lifecycle, heavy DOM manipulation)
 
+12. Never rely on `dispatch` presence directly in the Component, prefer action creators. `onClick={() => dispatch({ type: 'FOO' })}` is simply wrong because it creates new function with each render.
+
 ### Constants
 
 1. Use uppercase convention for all the constants
@@ -100,6 +102,58 @@ import * as Whatever from 'whatever/whatever';
 
 ### Containers
 
+1. Keep in the container just `connect`ed HOC, the component itself should be imported from `components` folder (index be an exception)
+
+2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function. 
+  ```javascript
+  const { onClick } = buildActionCreators({
+    onClick: 'CLICKED'
+  });
+
+  // is equal to:
+
+  const onClick = dispatch => payload => dispatch({ 'CLICKED', payload });
+  mapDispatchToProps({ onClick });
+  ```
+
+3. Keep in mind [`connect` has third argument called mergeProps](https://github.com/reactjs/react-redux/blob/master/docs/api.md) which in some situations may be very handy.
+
+  eg. tag actions by instance id of the Container (Elmish approach):
+  ```javascript
+  const CounterContainer = connect(
+    mapStateToProps,
+    buildActionCreators({
+      onIncrement: ActionTypes.INCREMENT
+    }),
+    (stateProps, dispatchProps, ownProps) => ({
+      ...ownProps,
+      ...stateProps,
+      ...dispatchProps,
+      onIncrement: () => dispatchProps.onIncrement(ownProps.counterId)
+    })
+  )(Counter);
+
+  <CounterContainer counterId='topCounter' />
+  <CounterContainer counterId='bottomCounter' />
+  ```
+
+  re-shaping dispatched action:
+  ```javascript
+    const ControlledTextField = ({ onChange, value }) => <input type="text" onChange={onChange} value={value} />;
+
+    const ControlledTextFieldContainer = connect(
+      mapStateToProps,
+      buildActionCreators({
+        onChange: ActionTypes.TEXT_FIELD_CHANGE
+      }),
+      (stateProps, dispatchProps, ownProps) => ({
+        ...ownProps,
+        ...stateProps,
+        ...dispatchProps,
+        onChange: ev => dispatchProps.onChange(ev.target.value)
+      })
+    )
+  ```
 
 ## Build
 
