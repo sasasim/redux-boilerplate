@@ -155,8 +155,40 @@ import * as Whatever from 'whatever/whatever';
     )(ControlledTextField)
   ```
 
-### Reducers
-1. Prefer `objects` over primitive types as state
+### Sagas
+1. Never use `yield*`, always prefer `yield call` or `yield fork`
+
+  ```javascript
+  function* apiSaga() {
+     yield put({ type: 'SetLoadingSpinner' });
+     try {
+       yield call(api);
+     } finally {
+       yield put({ type: 'ResetLoadingSpinner' });
+     }
+  }
+
+  // You better do this
+  function* rootSaga() {
+      yield take('CallAPI');
+
+      // You should realize that you can choose between call and fork
+      // depending on use case
+      yield call(apiSaga);
+  }
+
+  // Instead of this
+  function* rootSaga(){
+      yield take('CallAPI');
+      yield* apiSaga();
+  }
+  ```
+
+  The reason why `call` is preferred way is because of testing.
+
+2. Always `default` export Saga and fork the function in the parent. Therefore if you want to `takeEvery` you can do that in the exported function for particular saga. See `helloUserSaga`.
+
+
 
 ## Build
 
