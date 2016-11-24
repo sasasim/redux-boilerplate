@@ -8,20 +8,12 @@ export default class Link extends Component {
     this.boundOnClick = this.onClick.bind(this);
   }
 
-  onClick(ev) {
-    ev.preventDefault();
-
-    const {
-      name,
-      params,
-      options
-    } = this.props;
-
-    this.context.router.navigate(
-      name,
-      params,
-      options
-    );
+  onClick(event) {
+    if (!event.button && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+      event.preventDefault();
+      const { name, params, options } = this.props;
+      this.context.router.navigate(name, params, options);
+    }
   }
 
   render() {
