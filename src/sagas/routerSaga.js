@@ -5,7 +5,7 @@ import { actionTypes } from 'redux-router5';
 import helloUserSaga from 'sagas/helloUserSaga';
 import * as Routes from 'constants/routes';
 
-function* routerSaga(routingMap) {
+export function* routerSaga(routingMap) {
   let sagaTask = null;
 
   while (true) {
