@@ -1,6 +1,6 @@
 # react/redux boilerplate
 
-> react, redux, redux-saga, react-router, reselect, normalizr
+> react, redux, redux-saga, rotuer5, reselect, normalizr
 
 ## Development
 
@@ -19,7 +19,7 @@ For now, we have agreed on using:
 
 1. [`react`](https://facebook.github.io/react/) for rendering
 2. [`redux`](http://redux.js.org/) for state management
-3. [`react-router`](https://react-router.now.sh/) for client-side routing
+3. [`router5`](http://router5.github.io/) for client-side routing
 4. [`redux-saga`](https://github.com/yelouafi/redux-saga) for business logic and asynchronous workflow
 5. [`reselect`](https://github.com/reactjs/reselect) for memoized, composable selectors
 6. [`normlizr`](https://github.com/paularmstrong/normalizr) for normalizing business entities
