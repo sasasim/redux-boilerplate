@@ -188,17 +188,35 @@ import * as Whatever from 'whatever/whatever';
 
 2. Always `default` export Saga and fork the function in the parent. Therefore if you want to `takeEvery` you can do that in the exported function for particular saga. See `helloUserSaga`.
 
-
-
 ## Build
+
+
 
 ## Deployment
 
-## Linting & Testing
+We are using [now.sh](https://zeit.co/now/) for realtime global deployment, all you have to do to get your current application online is running `npm run deploy`. First time you run the command, you will be prompted for e-mail, just provide the e-mail and visit confirmation link, from now on, you can just deploy the app by running `npm run deploy` and the application gets deployed on random URL (which is going to be copied to your cliboard).
 
-## Debugging
+Implementation is easy, all we had to do was install `now` via `npm`. Deploy script runs the build script which creates static assets inside `dist/` folder. This folder contains the only non-gitignored file which is `package.json` and this `package.json` is responsible for running static HTTP server. After application is built, it's just a matter of `now dist/` to get the application online.
+
+## Linting
+
+The code is linted using `eslint`, basically we extend [`airbnb`](https://github.com/airbnb/javascript)'s code style.
+
+One especially handy plugin is `eslint-plugin-import`, its responsibility is checking whether imported modules really exists in the file system. It works for libraries & user modules as well.
+
+## Testing
+
+There are two scripts available:
+
+- `npm run test` for single test run
+- `npm run test:watch` for watching changes and re-runnig the tests
+
+Testing framework is [Jest](https://facebook.github.io/jest/), there's basically no configuration and the only command that is being used is `jest`. It automatically uses `babel` (configured via `.babelrc`) for transpiling.
 
 ## Styling
+
+We just did a basic setup with `stylus` and `autoprefixer`, in development styles are embedded right into the component, in production styles are being extracted using `extract-text-webpack-plugin` to standalone CSS file.
+
 
 ## Questions
 
