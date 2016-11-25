@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getCounter as getState } from 'selectors';
+import { getCounter as getState } from 'selectors/rootSelectors';
 
 export const getValue = createSelector(
   getState,

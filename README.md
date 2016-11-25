@@ -35,8 +35,7 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 ### Files & folders
 1. Prefer pre-defined directory structure, which is flat, we don't want nested folders because it makes reasoning about imports much more difficult
 2. File name must be unique across the whole project, it's good practice to add suffix of file type eg. `counterSaga` and `counterReducer`
-3. Use `index.js` filename for root entities (eg. root saga, root reducer etc.) because all the entities technically form a tree with its root
-4. Only classes or `React` Components (keep in mind that Container is also `React` Component) can have first letter upper-cased in the name of its file
+3. Only classes or `React` Components (keep in mind that Container is also `React` Component) can have first letter upper-cased in the name of its file
 
 ### Imports
 ```javascript
@@ -102,7 +101,7 @@ import * as Whatever from 'whatever/whatever';
 
 ### Containers
 
-1. Keep in the container just `connect`ed HOC, the component itself should be imported from `components` folder (index be an exception)
+1. Keep in the container just `connect`ed HOC, the component itself should be imported from `components` folder (root be an exception)
 
 2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function. 
   ```javascript
@@ -219,6 +218,3 @@ We just did a basic setup with `stylus` and `autoprefixer`, in development style
 1. Should we rather prefer React classes over stateless-functions? At the moment, there's no performance benefit when using stateless functions and in fact, statelss function does not even implement pure rendering, therefore the only option to use `shouldComponentUpdate` is to wrap the stateless function into stateful component
 
 2. Is the flat directory structure good fit for large projects? Does it scale well? Should we somehow namespace it at some point?
-
-3. Do we want to use `index.js` filenames?
-
