@@ -188,10 +188,6 @@ import * as Whatever from 'whatever/whatever';
 
 2. Always `default` export Saga and fork the function in the parent. Therefore if you want to `takeEvery` you can do that in the exported function for particular saga. See `helloUserSaga`.
 
-## Build
-
-
-
 ## Deployment
 
 We are using [now.sh](https://zeit.co/now/) for realtime global deployment, all you have to do to get your current application online is running `npm run deploy`. First time you run the command, you will be prompted for e-mail, just provide the e-mail and visit confirmation link, from now on, you can just deploy the app by running `npm run deploy` and the application gets deployed on random URL (which is going to be copied to your cliboard).
