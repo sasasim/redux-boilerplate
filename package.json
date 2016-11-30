@@ -52,7 +52,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.24.1",
     "jest": "^17.0.3",
-    "now": "^0.28.1",
+    "now": "^0.33.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
