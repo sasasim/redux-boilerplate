@@ -1,4 +1,7 @@
 {
-  "presets": ["react-native"],
-  "plugins": ["transform-inline-environment-variables"]
+  "presets": ["es2015", "react", "stage-2"],
+  "plugins": [
+    "transform-runtime",
+    ["module-resolver", {"root": ["src"]}]
+  ]
 }

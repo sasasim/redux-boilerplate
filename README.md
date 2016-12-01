@@ -1,136 +1,220 @@
-# redux boilerplate built on top of [redux-elm](https://github.com/salsita/redux-elm)
+# react/redux boilerplate
 
-> Universal, react, react-native, redux-elm, react-router, redux-saga ... want more buzzwords?!
+> react, redux, redux-saga, rotuer5, reselect, normalizr
 
-1. [Usage](#usage)
-2. [Development](#development)
-3. [Configuration](#configuration)
-4. [Server source code](#server-source-code)
-5. [Client source code](#client-source-code)
-  1. [Application architecture](#application-architecture)
-  2. [Theme support](#theme-support)
-6. [Unit tests](#unit-tests)
-7. [List of dependencies](#list-of-dependencies)
-  1. [Development Deps](#development-deps)
-  2. [Runtime Deps](#runtime-deps)
+## Development
 
-
-## Usage
 ```
 git clone git@github.com:salsita/redux-boilerplate.git
 cd redux-boilerplate
-npm install
+yarn
 npm start
 ```
+
 Navigate your browser to http://localhost:3000/
 
+## Underlying library Stack
 
-## Development
+For now, we have agreed on using:
+
+1. [`react`](https://facebook.github.io/react/) for rendering
+2. [`redux`](http://redux.js.org/) for state management
+3. [`router5`](http://router5.github.io/) for client-side routing
+4. [`redux-saga`](https://github.com/yelouafi/redux-saga) for business logic and asynchronous workflow
+5. [`reselect`](https://github.com/reactjs/reselect) for memoized, composable selectors
+6. [`normlizr`](https://github.com/paularmstrong/normalizr) for normalizing business entities
+
+### React
+
+The heart of rendering is `react`. The goal is to keep `react` as very simple thin rendering library and therefore delegate state management to `redux`. However, sometimes it makes sense to keep the `Component` stateful, for example: a lot of DOM interaction, need for Component lifecycle, non-business specific simple state management (e.g. `hover`).
+
+## Styleguide
+
+You are strongly encouraged to read & use this styleguide, feel free to file an issue if you disagree with some rule, or you feel like adding a new one.
+
+### Files & folders
+1. Prefer predefined directory structure, which is flat, we don't want nested folders because it makes reasoning about imports much more difficult
+2. File name must be unique across the whole project, it's good practice to add suffix of file type eg. `counterSaga` and `counterReducer`
+3. Only classes or `React` Components (keep in mind that Containers are also `React` Components) should have the first letter of their filename in upper-case
+
+### Imports
+```javascript
+import library from 'library';
+import nextLibrary, { namedStuffFromNextLibrary } from 'next-library';
+import { namedStuffFromLibrary } from 'another-library';
+
+import DefaultImport from 'components/Component';
+import * as ActionTypes from 'constants/actionTypes';
+import * as Whatever from 'whatever/whatever';
 ```
-npm run start:dev
-```
-Navigate your browser to http://localhost:3000/
 
-## iOS Development
-First start dev server:
+1. Prefer wildcard imports over named, because it namespaces variables in the scope
+2. Use aliases instead of relative imports
+3. If possible order group of imports alphabetically by path
 
-```
-npm run start:dev
-```
+### React Components
+1. Keep all your `react` components within `src/components` folder, use `.js` suffix even though you are technically using JSX
 
-Then start native dev server:
+2. Always name your component before exporting, therefore prefer this:
+  ```javascript
+  import React from 'react';
 
-```
-npm run start:native
-```
+  const MyComponent = () => <div>Hello World</div>;
+  export default MyComponent;
+  ```
 
-Then open the project (`ios/boilerplate.xcodeproj`) in XCode and run the app in Simulator (or device)
+  over this:
+  ```javascript
+  import React from 'react';
 
-## Configuration
+  export default () => <div>Hello World</div>;
+  ```
 
-There is `src/config` which contains production and development settings.
-Proper configurations is loaded according to `NODE_ENV` env property.
-Additionally `npm install` creates `local.js` config file which can override any
-values and it's not tracked in Git repository. Purpose of this config is
-for storing sensitive data or developer specific values.
+  There are two reasons: the component will have a name in `react` devtools, and it's much easier to add proptypes later even when the component does not currently accept any props
 
-Any top-level variable in config can be also overridden by env variable.
+3. Always specify PropTypes and be as specific as possible, therefore using of `PropTypes.object` or `PropTypes.array` is banned, use `PropTypes.shape` and `PropTypes.arrayOf` instead
 
-### DevTools & Hot reloading
-`redux-boilerplate` supports [`redux-devtools-extension`](https://github.com/zalmoxisus/redux-devtools-extension),
-please [install the extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
-it's worth it! Boilerplate also supports hot-reloading including Views & Updaters.
+4. Keep in mind that 99% of your props are `required` so don't forget to define them as `isRequired` in the definition
+
+5. Prefer destructured props over accessing them
+
+6. Feel free to use [Short-circuit evaluation](https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Operators/Logical_Operators#Short-circuit_evaluation)
+
+7. Import `React` first, then define the component, then specify PropTypes and as the last step do default export
+
+8. Always use `default` exports for Components
+
+9. Split Component into many sub components when the Component becomes too complex, keep them in the same file if it makes sense, otherwise you can make it generic and abstract it away to separate exported `Component`
+
+10. Never ever use `bind` or lambda functions in event handlers, they create new reference with **each render**! Of course an exception is when you need to pass an argument (e.g. index of item which has been clicked), however, think twice if that's really the case
+
+11. Use stateful components if it makes sense (simple UI state, component lifecycle, heavy DOM manipulation)
+
+12. Never rely on `dispatch` presence directly in the Component, prefer action creators. `onClick={() => dispatch({ type: 'FOO' })}` is simply wrong because it creates new function with each render
+
+### Constants
+
+1. Use uppercase convention for all the constants
+2. Action types are always called `actionTypes` not `actions`!
+3. Try to logically group `actionTypes` together by using empty lines as visual separators
+4. Might even be a good idea to annotate the group with comments
+
+### Containers
+
+1. Keep just `connect`ed HOC in the container, the component itself should be imported from `components` folder (root be an exception)
+
+2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function 
+  ```javascript
+  const { onClick } = buildActionCreators({
+    onClick: 'CLICKED'
+  });
+
+  // is equal to:
+
+  const onClick = dispatch => payload => dispatch({ 'CLICKED', payload });
+  mapDispatchToProps({ onClick });
+  ```
+
+3. Keep in mind that [`connect` has also the third argument called mergeProps](https://github.com/reactjs/react-redux/blob/master/docs/api.md) which may be very handy in some situations
+
+  E.g. tag actions by instance id of the Container (Elmish approach):
+  ```javascript
+  const CounterContainer = connect(
+    mapStateToProps,
+    buildActionCreators({
+      onIncrement: ActionTypes.INCREMENT
+    }),
+    (stateProps, dispatchProps, ownProps) => ({
+      ...ownProps,
+      ...stateProps,
+      ...dispatchProps,
+      onIncrement: () => dispatchProps.onIncrement(ownProps.counterId)
+    })
+  )(Counter);
+
+  <CounterContainer counterId='topCounter' />
+  <CounterContainer counterId='bottomCounter' />
+  ```
+
+  Re-shaping dispatched action:
+  ```javascript
+    const ControlledTextField = ({ onChange, value }) => <input type="text" onChange={onChange} value={value} />;
+
+    const ControlledTextFieldContainer = connect(
+      mapStateToProps,
+      buildActionCreators({
+        onChange: ActionTypes.TEXT_FIELD_CHANGE
+      }),
+      (stateProps, dispatchProps, ownProps) => ({
+        ...ownProps,
+        ...stateProps,
+        ...dispatchProps,
+        onChange: ev => dispatchProps.onChange(ev.target.value)
+      })
+    )(ControlledTextField)
+  ```
+
+### Sagas
+1. Never use `yield*`, always prefer `yield call` or `yield fork`
+
+  ```javascript
+  function* apiSaga() {
+     yield put({ type: 'SetLoadingSpinner' });
+     try {
+       yield call(api);
+     } finally {
+       yield put({ type: 'ResetLoadingSpinner' });
+     }
+  }
+
+  // You better do this
+  function* rootSaga() {
+      yield take('CallAPI');
+
+      // You should realize that you can choose between call and fork
+      // depending on use case
+      yield call(apiSaga);
+  }
+
+  // Instead of this
+  function* rootSaga(){
+      yield take('CallAPI');
+      yield* apiSaga();
+  }
+  ```
+
+  The reason why `call` is preferred way is because of testing
+
+2. Always `default` export Saga and fork the function in the parent. Therefore if you want to `takeEvery` you can do that in the exported function for particular saga. See `helloUserSaga`
+
+## Styling
+
+There is a basic setup with `stylus` and `autoprefixer`, in development the styles are embedded right into the component, in production the styles are extracted using `extract-text-webpack-plugin` to standalone CSS file.
+
+## Linting
+
+The code is linted using `eslint`, we extend [`airbnb`](https://github.com/airbnb/javascript)'s code style.
+
+One especially handy plugin is `eslint-plugin-import`, its responsibility is checking whether imported modules really exists in the file system. It works for libraries & user modules as well.
+
+## Testing
+
+There are two scripts available:
+
+- `npm run test` for single test run
+- `npm run test:watch` for watching changes and re-runnig the tests
+
+Testing framework is [Jest](https://facebook.github.io/jest/), there's no configuration and the only command that is  used is `jest`. It automatically uses `babel` (configured via `.babelrc`) for transpiling.
+
+## Deployment
+
+We are using [now.sh](https://zeit.co/now/) for realtime global deployment, all you have to do to get your current application online is running `npm run deploy`. First time you run the command, you will be prompted for e-mail, just provide the e-mail and then visit the confirmation link you get. From then on, you can deploy the app by running `npm run deploy` and the application gets deployed on random URL (which is going to be copied to your cliboard).
+
+Implementation is easy, all we had to do was install `now` via `npm`. Deploy script runs the build script which creates static assets inside `dist/` folder. This folder contains the only non-gitignored file which is `package.json` and this `package.json` is responsible for running static HTTP server. After the application is built, it's just a matter of `now dist/` to get the application online.
 
 
-## Server source code
+## Open questions
 
-The server `src/server/main.js` source code listens for http requests on port 3000,
-or port number configured by the environment variable PORT. It serves static files
-from the `dist/client` directory under url path `/`. It returns JSON data
-for http get request on path `/hello`. For every other url path,
-the server returns the default `index.html` page.
+1. Should we rather prefer React classes over stateless-functions? At the moment, there's no performance benefit when using stateless functions and in fact, statelss function does not even implement pure rendering, therefore the only option to use `shouldComponentUpdate` is to wrap the stateless function into stateful component.
 
-## Client source code
-
-### Application architecture
-
-For deeper understanding of application architecture follow thorough [redux-elm documentation](http://salsita.github.io/redux-elm/). Application is
-universal, therefore first render is always done on the server and then re-hydrated on the client. By Universal, I mean trully universal therefore
-you can reuse your business logic code (Effects & Updaters) in React-Native version as well.
-
-### Theme support
-
-The boilerplate offers theme support by utilizing webpack's mechanism for resolving modules.
-
-#### Example
-
-? Your code is in `src/client/default`. Say you want to create a theme called "green".
-
-! Create a new folder `src/client/green`.
-! Export an environment variable `export THEME_FOLDER=green`. This will enable the green theme.
-
-? Now you want to replace your less-variables for the green theme. You have them in `src/client/default/less/variables.less`.
-
-! Copy the file to `src/client/green/less/variables.less`, and adjust them.
-
-? The "green" theme should show a different text in the `Foo`-component.
-
-! Do the same - copy the file `src/client/default/components/foo.jsx` to the green theme and adjust.
-
-**Important:** You have to allow webpack resolve the module locations for you. This means, don't use relative (or absolute)
-paths. Webpack will resolve them starting with the config's `root` path(s) - and that's how theming works.
-
-Note: After adding new files, you have to restart your (dev)server to introduce them to webpack.
-
-## Unit tests
-
-You can run tests by running `npm test` or develop them in watch mode by running `npm run test:watch`.
-Unit tests are shared across client and server.
-
-## List of dependencies
-
-This is a brief description what we depend on and why:
-
-### Development Deps
-
-* `babel` and the ecosystem - We need to transpile the code, ES20XX to ES5
-* `chai` - Nice asserting library
-* `eslint` and ecosystem - We want to keep code quality high and therfore we need a policeman, using airbnb config
-* `mocha` - Testing framework
-* `request` - We need proxy to implement development runner
-* `single-child` - Again utility tool for implementing development runner
-* `sinon` - Nice testing tools (Mocking/Spying/Stubbing)
-* `webpack` - bundles everything together into minified file
-
-### Runtime Deps
-
-* `express` - lightweight http server
-* `history` - `react-router` peer dependency
-* `react` and `react-dom` - Thin View library
-* `react-native` - Thin View library for native apps
-* `react-router` - React routing library
-* `redux` - State container
-* `redux-react` React binding for Redux
-* `react-router-redux` - React Router binding for Redux
-* `redux-elm` - The Elm Architecture in JavaScript
-* `redux-saga` - Side Effects & Long Running Transactions for Redux
+2. Is the flat directory structure good fit for large projects? Does it scale well? Should we somehow namespace it at some point?
