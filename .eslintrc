@@ -7,6 +7,12 @@
   "parser": "babel-eslint",
   "rules": {
     "comma-dangle": 0,
+    "no-constant-condition": [1, {"checkLoops": false }],
+    'no-restricted-syntax': [
+      'error',
+      'LabeledStatement',
+      'WithStatement',
+    ],
     "import/prefer-default-export": 0,
     "react/jsx-filename-extension": 0
   },
