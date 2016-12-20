@@ -19,7 +19,7 @@ module.exports = {
   },
   module: Object.assign({}, shared.module, {
     loaders: shared.module.loaders.map((loader) => {
-      if (loader.id === 'style') {
+      if (loader.id === 'style' || loader.id === 'css') {
         return Object.assign({}, loader, {
           loader: ExtractTextPlugin.extract('style', loader.loader.replace('style', ''))
         });
