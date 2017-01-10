@@ -15,6 +15,10 @@ module.exports = {
       test: /\.styl$/,
       loader: 'style!css!autoprefixer!stylus',
       include: path.resolve(__dirname, '../src')
+    }, {
+      id: 'css',
+      test: /\.css$/,
+      loader: 'style!css',
     }]
   }
 };
