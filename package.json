@@ -30,7 +30,8 @@
     "redux-saga": "^0.12.1",
     "reselect": "^2.5.4",
     "router5": "^4.3.4",
-    "router5.helpers": "^1.2.0"
+    "router5.helpers": "^1.2.0",
+    "router5.transition-path": "^4.0.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
