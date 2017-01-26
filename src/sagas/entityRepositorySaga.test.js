@@ -1,12 +1,12 @@
 import { put } from 'redux-saga/effects';
-import { Schema } from 'normalizr';
+import { schema } from 'normalizr';
 
 import { store } from 'src/sagas/entityRepositorySaga';
 import buildAction from 'src/helpers/buildAction';
 import * as ActionTypes from 'src/constants/actionTypes';
 
-const UserSchema = new Schema('User');
-const CompanySchema = new Schema('Company');
+const UserSchema = new schema.Entity('User');
+const CompanySchema = new schema.Entity('Company');
 
 UserSchema.define({
   company: CompanySchema

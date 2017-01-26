@@ -1,7 +1,7 @@
-import { Schema } from 'normalizr';
+import { schema } from 'normalizr';
 
-export const UserSchema = new Schema('User');
-export const CountrySchema = new Schema('Country');
+export const UserSchema = new schema.Entity('User');
+export const CountrySchema = new schema.Entity('Country');
 
 UserSchema.define({
   country: CountrySchema
