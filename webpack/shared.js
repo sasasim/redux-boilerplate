@@ -19,6 +19,14 @@ module.exports = {
       id: 'css',
       test: /\.css$/,
       loader: 'style!css',
+    }, {
+      test: /\.woff(2)$/,
+      loader: 'url?limit=10000&mimetype=application/font-woff',
+      include: path.resolve(__dirname, '../src/assets')
+    }, {
+      test: /\.(ttf|eot|svg|png|jpeg|jpg)$/,
+      loader: 'file',
+      include: path.resolve(__dirname, '../src/assets')
     }]
   }
 };
