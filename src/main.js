@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router5';
 
-import Index from 'src/containers/RootContainer';
+import Index from 'src/components/Root';
 import createRouter from 'src/router';
 import buildStore from 'src/store';
 

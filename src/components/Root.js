@@ -5,8 +5,8 @@ import { startsWithSegment } from 'router5.helpers';
 
 import logo from 'assets/salsita.png';
 
-import Counter from 'src/containers/CounterContainer';
-import HelloUser from 'src/containers/HelloUserContainer';
+import Counter from 'src/components/Counter';
+import HelloUser from 'src/components/HelloUser';
 import Link from 'src/components/Link';
 import NotFound from 'src/components/NotFound';
 import * as Routes from 'src/constants/routes';

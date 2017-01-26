@@ -1,4 +1,9 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+import buildActionCreators from 'src/helpers/buildActionCreators';
+import * as ActionTypes from 'src/constants/actionTypes';
+import * as HelloUserSelectors from 'src/selectors/helloUserSelectors';
 
 const HelloUser = ({ greeted, user, onSayHello }) => (
   <div>
@@ -19,4 +24,14 @@ HelloUser.propTypes = {
   onSayHello: PropTypes.func.isRequired
 };
 
-export default HelloUser;
+const mapStateToProps = state => ({
+  greeted: HelloUserSelectors.isGreeted(state),
+  user: HelloUserSelectors.getUser(state)
+});
+
+export default connect(
+  mapStateToProps,
+  buildActionCreators({
+    onSayHello: ActionTypes.SAY_HELLO
+  })
+)(HelloUser);
