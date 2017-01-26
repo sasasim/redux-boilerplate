@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import Counter from 'components/Counter';
-import buildActionCreators from 'helpers/buildActionCreators';
-import * as ActionTypes from 'constants/actionTypes';
-import * as CounterSelectors from 'selectors/counterSelectors';
+import Counter from 'src/components/Counter';
+import buildActionCreators from 'src/helpers/buildActionCreators';
+import * as ActionTypes from 'src/constants/actionTypes';
+import * as CounterSelectors from 'src/selectors/counterSelectors';
 
 const mapStateToProps = state => ({
   value: CounterSelectors.getValue(state)

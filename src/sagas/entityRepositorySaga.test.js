@@ -1,8 +1,9 @@
 import { put } from 'redux-saga/effects';
 import { Schema } from 'normalizr';
-import { store } from 'sagas/entityRepositorySaga';
-import buildAction from 'helpers/buildAction';
-import * as ActionTypes from 'constants/actionTypes';
+
+import { store } from 'src/sagas/entityRepositorySaga';
+import buildAction from 'src/helpers/buildAction';
+import * as ActionTypes from 'src/constants/actionTypes';
 
 const UserSchema = new Schema('User');
 const CompanySchema = new Schema('Company');

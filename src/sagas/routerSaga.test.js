@@ -1,7 +1,8 @@
 import { fork, take, cancel } from 'redux-saga/effects';
-import { routerSaga } from 'sagas/routerSaga';
 import { actionTypes } from 'redux-router5';
 import { createMockTask } from 'redux-saga/utils';
+
+import { routerSaga } from 'src/sagas/routerSaga';
 
 const stub = () => 42;
 const STUB_ROUTE = 'STUB_ROUTE';

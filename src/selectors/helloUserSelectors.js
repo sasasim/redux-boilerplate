@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { getHelloUser as getState } from 'selectors/rootSelectors';
-import * as EntityRepositorySelectors from 'selectors/entityRepositorySelectors';
+import { getHelloUser as getState } from 'src/selectors/rootSelectors';
+import * as EntityRepositorySelectors from 'src/selectors/entityRepositorySelectors';
 
 export const isGreeted = createSelector(
   getState,

@@ -1,11 +1,12 @@
 import { takeEvery } from 'redux-saga';
 import { fork, call, put } from 'redux-saga/effects';
-import helloUserSaga, { onSayHello } from 'sagas/helloUserSaga';
-import { store } from 'sagas/entityRepositorySaga';
-import { fetchUser } from 'effects/api';
-import * as ActionTypes from 'constants/actionTypes';
-import { UserSchema } from 'schema';
-import buildAction from 'helpers/buildAction';
+
+import helloUserSaga, { onSayHello } from 'src/sagas/helloUserSaga';
+import { store } from 'src/sagas/entityRepositorySaga';
+import { fetchUser } from 'src/effects/api';
+import * as ActionTypes from 'src/constants/actionTypes';
+import { UserSchema } from 'src/schema';
+import buildAction from 'src/helpers/buildAction';
 
 describe('Hello User Saga', () => {
   it('should fork takeEvery SAY_HELLO and start onSayHello', () => {

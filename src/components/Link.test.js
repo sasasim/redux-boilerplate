@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import Link from 'components/Link';
+import Link from 'src/components/Link';
 
 class RouterProvider extends Component {
   getChildContext() {

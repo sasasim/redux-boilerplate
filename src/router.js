@@ -1,7 +1,7 @@
 import createRouter from 'router5';
 import browserPlugin from 'router5/plugins/browser';
 
-import * as Routes from 'constants/routes';
+import * as Routes from 'src/constants/routes';
 
 const routes = [{
   name: Routes.INDEX,

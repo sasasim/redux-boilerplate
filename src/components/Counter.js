@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import 'components/counter.styl';
+import 'styles/counter.styl';
 
 const Counter = ({ value, onDecrement, onIncrement }) => (
   <div className="counter">

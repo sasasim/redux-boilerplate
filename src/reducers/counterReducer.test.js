@@ -1,6 +1,6 @@
-import counterReducer from 'reducers/counterReducer';
-import * as ActionTypes from 'constants/actionTypes';
-import buildAction from 'helpers/buildAction';
+import counterReducer from 'src/reducers/counterReducer';
+import * as ActionTypes from 'src/constants/actionTypes';
+import buildAction from 'src/helpers/buildAction';
 
 describe('Counter Reducer', () => {
   it('should increment value on INCREMENT', () => {

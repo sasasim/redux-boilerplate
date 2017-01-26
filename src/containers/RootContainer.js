@@ -4,11 +4,12 @@ import { routeNodeSelector } from 'redux-router5';
 import { startsWithSegment } from 'router5.helpers';
 
 import logo from 'assets/salsita.png';
-import Counter from 'containers/CounterContainer';
-import HelloUser from 'containers/HelloUserContainer';
-import Link from 'components/Link';
-import NotFound from 'components/NotFound';
-import * as Routes from 'constants/routes';
+
+import Counter from 'src/containers/CounterContainer';
+import HelloUser from 'src/containers/HelloUserContainer';
+import Link from 'src/components/Link';
+import NotFound from 'src/components/NotFound';
+import * as Routes from 'src/constants/routes';
 
 const renderContent = (testRoute) => {
   if (testRoute(Routes.COUNTER) || testRoute(Routes.INDEX)) {

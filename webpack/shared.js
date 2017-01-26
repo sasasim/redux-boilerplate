@@ -14,7 +14,7 @@ module.exports = {
       id: 'style',
       test: /\.styl$/,
       loader: 'style!css!autoprefixer!stylus',
-      include: path.resolve(__dirname, '../src')
+      include: path.resolve(__dirname, '../styles')
     }, {
       id: 'css',
       test: /\.css$/,
@@ -22,11 +22,11 @@ module.exports = {
     }, {
       test: /\.woff(2)$/,
       loader: 'url?limit=10000&mimetype=application/font-woff',
-      include: path.resolve(__dirname, '../src/assets')
+      include: path.resolve(__dirname, '../assets')
     }, {
       test: /\.(ttf|eot|svg|png|jpeg|jpg)$/,
       loader: 'file',
-      include: path.resolve(__dirname, '../src/assets')
+      include: path.resolve(__dirname, '../assets')
     }]
   }
 };

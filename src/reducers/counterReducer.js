@@ -1,5 +1,5 @@
-import createReducer from 'helpers/createReducer';
-import * as ActionTypes from 'constants/actionTypes';
+import createReducer from 'src/helpers/createReducer';
+import * as ActionTypes from 'src/constants/actionTypes';
 
 const initialState = {
   value: 0
