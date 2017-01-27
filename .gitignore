@@ -3,3 +3,4 @@ node_modules/
 npm-debug.log
 dist/*
 !dist/package.json
+!dist/server.json
