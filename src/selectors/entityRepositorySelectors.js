@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { map } from 'lodash';
+import map from 'lodash/map';
 
 import { getEntityRepository as getState } from 'src/selectors/rootSelectors';
 

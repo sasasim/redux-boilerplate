@@ -1,5 +1,4 @@
-import { call, put, fork } from 'redux-saga/effects';
-import { takeEvery } from 'redux-saga';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 import buildAction from 'src/helpers/buildAction';
 import * as ActionTypes from 'src/constants/actionTypes';
@@ -14,7 +13,13 @@ export function* onSayHello() {
 }
 
 export default function* () {
-  yield [
-    fork(takeEvery, ActionTypes.SAY_HELLO, onSayHello)
-  ];
+  yield takeEvery(ActionTypes.SAY_HELLO, function*() {
+    console.log('doobar');
+  });
+
+  // yield [
+  //   takeEvery(ActionTypes.SAY_HELLO, function*() {
+  //     console.log('now')
+  //   })
+  // ];
 }

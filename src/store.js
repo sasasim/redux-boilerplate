@@ -29,11 +29,11 @@ export default function configureStore(router) {
   }
   const store = createStore(reducer, enhancer);
   sagaMiddleware.run(saga);
-  if (!isProduction && module.hot) {
-    module.hot.accept('./reducers/rootReducer', () => {
-      // eslint-disable-next-line global-require
-      store.replaceReducer(require('./reducers/rootReducer').default);
-    });
-  }
+  // if (!isProduction && module.hot) {
+  //   module.hot.accept('./reducers/rootReducer', () => {
+  //     // eslint-disable-next-line global-require
+  //     store.replaceReducer(require('./reducers/rootReducer').default);
+  //   });
+  // }
   return store;
 }

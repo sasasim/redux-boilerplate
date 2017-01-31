@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { routeNodeSelector } from 'redux-router5';
 import { startsWithSegment } from 'router5.helpers';
 
-import logo from 'assets/salsita.png';
+// import logo from 'assets/salsita.png';
 
 import Counter from 'src/components/Counter';
 import HelloUser from 'src/components/HelloUser';
@@ -27,7 +27,6 @@ const Index = ({ route: { name } }) => {
   return (
     <div>
       <h1>redux-boilerplate</h1>
-      <img src={logo} alt="Salsita" />
       <nav>
         <Link name={Routes.COUNTER}>Counter</Link>&nbsp;|&nbsp;
         <Link name={Routes.HELLO_USER}>Hello User</Link>
