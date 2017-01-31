@@ -3,32 +3,39 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pkg = require('../package.json');
-const shared = require('./shared.js');
 
 const appName = `${pkg.name}-${pkg.version}`;
 const jsBundleName = `${appName}.min.js`;
 const cssBundleName = `${appName}.min.css`;
 const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
 
+const extractCss = new ExtractTextPlugin(cssBundleName);
+
 module.exports = {
-  devtool: 'sourcemap',
-  entry: shared.entry,
+  devtool: 'source-map',
+  entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: `/${jsBundleName}`
   },
-  module: Object.assign({}, shared.module, {
-    loaders: shared.module.loaders.map((loader) => {
-      if (loader.id === 'style' || loader.id === 'css') {
-        return Object.assign({}, loader, {
-          loader: ExtractTextPlugin.extract('style', loader.loader.replace('style', ''))
-        });
-      }
-
-      return loader;
-    })
-  }),
-  resolve: shared.resolve,
+  module: {
+    rules: [{
+      test: /\.jsx$|\.js$/,
+      include: path.resolve(__dirname, '../src'),
+      use: [{ loader: 'babel-loader' }]
+    }, {
+      test: /\.(ttf|eot|svg|png|jpeg|jpg)$/,
+      include: path.resolve(__dirname, '../assets'),
+      use: [{ loader: 'file-loader' }]
+    }, {
+      test: /\.styl$/,
+      include: path.resolve(__dirname, '../styles'),
+      use: extractCss.extract(['css-loader', 'autoprefixer-loader', 'stylus-loader'])
+    }, {
+      test: /\.css$/,
+      use: extractCss.extract(['css-loader'])
+    }]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
@@ -48,7 +55,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         screw_ie8: true,
@@ -60,8 +66,9 @@ module.exports = {
       output: {
         comments: false,
         screw_ie8: true
-      }
+      },
+      sourceMap: true
     }),
-    new ExtractTextPlugin(cssBundleName)
+    extractCss
   ]
 };

@@ -1,4 +1,4 @@
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 
 import createReducer from 'src/helpers/createReducer';
 import * as ActionTypes from 'src/constants/actionTypes';
