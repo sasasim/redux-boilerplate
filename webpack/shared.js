@@ -20,7 +20,7 @@ module.exports = {
       test: /\.css$/,
       loader: 'style!css',
     }, {
-      test: /\.woff(2)$/,
+      test: /\.woff2?$/,
       loader: 'url?limit=10000&mimetype=application/font-woff',
       include: path.resolve(__dirname, '../assets')
     }, {
