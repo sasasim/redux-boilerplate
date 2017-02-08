@@ -4,9 +4,9 @@ import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { router5Middleware } from 'redux-router5';
 
-import reducer from 'reducers/rootReducer';
-import saga from 'sagas/rootSaga';
-import isProduction from 'helpers/isProduction';
+import reducer from 'src/reducers/rootReducer';
+import saga from 'src/sagas/rootSaga';
+import isProduction from 'src/helpers/isProduction';
 
 export default function configureStore(router) {
   const sagaMiddleware = createSagaMiddleware();

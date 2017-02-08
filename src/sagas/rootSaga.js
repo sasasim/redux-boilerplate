@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
 
-import defaultRouterSaga from 'sagas/routerSaga';
+import defaultRouterSaga from 'src/sagas/routerSaga';
 
 export default function* () {
   yield [

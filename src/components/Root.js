@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { routeNodeSelector } from 'redux-router5';
 import { startsWithSegment } from 'router5.helpers';
 
-import Counter from 'containers/CounterContainer';
-import HelloUser from 'containers/HelloUserContainer';
-import Link from 'components/Link';
-import NotFound from 'components/NotFound';
-import * as Routes from 'constants/routes';
+import logo from 'assets/salsita.png';
+
+import Counter from 'src/components/Counter';
+import HelloUser from 'src/components/HelloUser';
+import Link from 'src/components/Link';
+import NotFound from 'src/components/NotFound';
+import * as Routes from 'src/constants/routes';
 
 const renderContent = (testRoute) => {
   if (testRoute(Routes.COUNTER) || testRoute(Routes.INDEX)) {
@@ -25,6 +27,7 @@ const Index = ({ route: { name } }) => {
   return (
     <div>
       <h1>redux-boilerplate</h1>
+      <img src={logo} alt="Salsita" />
       <nav>
         <Link name={Routes.COUNTER}>Counter</Link>&nbsp;|&nbsp;
         <Link name={Routes.HELLO_USER}>Hello User</Link>

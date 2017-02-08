@@ -1,14 +1,14 @@
-import entityRepositoryReducer from 'reducers/entityRepositoryReducer';
-import * as ActionTypes from 'constants/actionTypes';
-import buildAction from 'helpers/buildAction';
+import entityRepositoryReducer from 'src/reducers/entityRepositoryReducer';
+import * as ActionTypes from 'src/constants/actionTypes';
+import buildAction from 'src/helpers/buildAction';
 
 describe('Counter Reducer', () => {
   it('should merge entity repository on ENTITY_REPOSITORY_HAS_CHANGED', () => {
     const initialState = {
       USER: {
         23: {
-          name: 'John',
-          lastName: 'Doe'
+          lastName: 'Doe',
+          name: 'John'
         }
       }
     };
@@ -24,9 +24,9 @@ describe('Counter Reducer', () => {
       }))).toEqual({
         USER: {
           23: {
-            name: 'John',
+            foo: true,
             lastName: 'Spicy',
-            foo: true
+            name: 'John'
           }
         }
       });

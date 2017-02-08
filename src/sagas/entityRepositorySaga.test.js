@@ -1,22 +1,23 @@
 import { put } from 'redux-saga/effects';
-import { Schema } from 'normalizr';
-import { store } from 'sagas/entityRepositorySaga';
-import buildAction from 'helpers/buildAction';
-import * as ActionTypes from 'constants/actionTypes';
+import { schema } from 'normalizr';
 
-const UserSchema = new Schema('User');
-const CompanySchema = new Schema('Company');
+import { store } from 'src/sagas/entityRepositorySaga';
+import buildAction from 'src/helpers/buildAction';
+import * as ActionTypes from 'src/constants/actionTypes';
+
+const UserSchema = new schema.Entity('User');
+const CompanySchema = new schema.Entity('Company');
 
 UserSchema.define({
   company: CompanySchema
 });
 
 const mockUser = {
-  id: 42,
   company: {
     id: 2,
     name: 'foobar'
-  }
+  },
+  id: 42
 };
 
 describe('Entity Repository Saga', () => {
@@ -33,16 +34,16 @@ describe('Entity Repository Saga', () => {
         put(buildAction(
           ActionTypes.ENTITY_REPOSITORY_HAS_CHANGED,
           {
-            User: {
-              42: {
-                id: 42,
-                company: 2
-              }
-            },
             Company: {
               2: {
                 id: 2,
                 name: 'foobar'
+              }
+            },
+            User: {
+              42: {
+                company: 2,
+                id: 42
               }
             }
           }

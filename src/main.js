@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router5';
 
-import Index from 'containers/RootContainer';
-import createRouter from 'router';
-import buildStore from 'store';
+import Index from 'src/components/Root';
+import createRouter from 'src/router';
+import buildStore from 'src/store';
 
 const router = createRouter();
 const store = buildStore(router);

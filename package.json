@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git@github.com:salsita/redux-boilerplate.git"
   },
+  "engines": {
+    "node": "7.0.0",
+    "npm": "3.10.8"
+  },
   "homepage": "https://www.salsitasoft.com/",
   "scripts": {
     "build": "webpack --config ./webpack/webpack.config.prod.js",
@@ -19,15 +23,15 @@
   "dependencies": {
     "babel-runtime": "^6.18.0",
     "lodash": "^4.16.6",
-    "normalizr": "^2.2.1",
+    "normalizr": "^3.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-redux": "^4.4.5",
+    "react-redux": "^5.0.2",
     "react-router5": "^4.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-router5": "^4.2.3",
-    "redux-saga": "^0.12.1",
+    "redux-saga": "^0.14.3",
     "reselect": "^2.5.4",
     "router5": "^4.3.4",
     "router5.helpers": "^1.2.0"
@@ -44,18 +48,20 @@
     "babel-preset-stage-2": "^6.18.0",
     "css-loader": "^0.26.0",
     "eslint": "^3.9.1",
-    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb": "^14.0.0",
     "eslint-import-resolver-babel-module": "^2.2.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.6.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
-    "jest": "^17.0.3",
-    "now": "^0.33.0",
+    "jest": "^18.1.0",
+    "now": "^3.0.1",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }

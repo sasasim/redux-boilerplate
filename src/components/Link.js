@@ -1,14 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Link extends Component {
-
-  constructor() {
-    super();
-
-    this.boundOnClick = this.onClick.bind(this);
-  }
-
-  onClick(event) {
+  onClick = (event) => {
     if (!event.button && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
       event.preventDefault();
       const { name, params, options } = this.props;
@@ -17,30 +10,25 @@ export default class Link extends Component {
   }
 
   render() {
-    const {
-      children,
-      name,
-      params
-    } = this.props;
-    const {
-      router
-    } = this.context;
-
+    const { children, name, params } = this.props;
+    const { router } = this.context;
+    const active = router.isActive(name, params);
     const href = router.buildUrl(name, params);
-
-    if (router.isActive(name, params)) {
-      return <span>{children}</span>;
-    }
-
-    return <a href={href} onClick={this.boundOnClick}>{children}</a>;
+    return (
+      <a
+        className={active ? 'active-link' : null}
+        href={href}
+        onClick={this.onClick}
+      >{children}</a>
+    );
   }
 }
 
 Link.propTypes = {
+  children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
-  params: PropTypes.object, // eslint-disable-line
-  options: PropTypes.object, // eslint-disable-line
-  children: PropTypes.node.isRequired
+  options: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  params: PropTypes.object // eslint-disable-line react/forbid-prop-types
 };
 
 Link.contextTypes = {

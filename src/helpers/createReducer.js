@@ -1,4 +1,4 @@
-import isProduction from 'helpers/isProduction';
+import isProduction from 'src/helpers/isProduction';
 
 export default (actionHandlers, initialState) => {
   if (!isProduction) {

@@ -1,10 +1,14 @@
 {
   "name": "app",
   "version": "1.0.0",
+  "engines": {
+    "node": "7.0.0",
+    "npm": "3.10.8"
+  },
   "scripts": {
-    "start": "spa-serve"
+    "start": "node server.js"
   },
   "dependencies": {
-    "spa-serve": "^1.0.8"
+    "express": "^4.14.0"
   }
 }

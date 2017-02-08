@@ -2,8 +2,8 @@ import { call, take, cancel, fork } from 'redux-saga/effects';
 import { endsWithSegment } from 'router5.helpers';
 import { actionTypes } from 'redux-router5';
 
-import helloUserSaga from 'sagas/helloUserSaga';
-import * as Routes from 'constants/routes';
+import helloUserSaga from 'src/sagas/helloUserSaga';
+import * as Routes from 'src/constants/routes';
 
 export function* routerSaga(routingMap) {
   let sagaTask = null;
