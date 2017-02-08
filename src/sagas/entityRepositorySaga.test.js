@@ -13,11 +13,11 @@ UserSchema.define({
 });
 
 const mockUser = {
-  id: 42,
   company: {
     id: 2,
     name: 'foobar'
-  }
+  },
+  id: 42
 };
 
 describe('Entity Repository Saga', () => {
@@ -34,16 +34,16 @@ describe('Entity Repository Saga', () => {
         put(buildAction(
           ActionTypes.ENTITY_REPOSITORY_HAS_CHANGED,
           {
-            User: {
-              42: {
-                id: 42,
-                company: 2
-              }
-            },
             Company: {
               2: {
                 id: 2,
                 name: 'foobar'
+              }
+            },
+            User: {
+              42: {
+                company: 2,
+                id: 42
               }
             }
           }

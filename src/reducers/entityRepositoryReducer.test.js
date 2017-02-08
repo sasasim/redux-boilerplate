@@ -7,8 +7,8 @@ describe('Counter Reducer', () => {
     const initialState = {
       USER: {
         23: {
-          name: 'John',
-          lastName: 'Doe'
+          lastName: 'Doe',
+          name: 'John'
         }
       }
     };
@@ -24,9 +24,9 @@ describe('Counter Reducer', () => {
       }))).toEqual({
         USER: {
           23: {
-            name: 'John',
+            foo: true,
             lastName: 'Spicy',
-            foo: true
+            name: 'John'
           }
         }
       });

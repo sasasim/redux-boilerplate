@@ -14,14 +14,14 @@ const HelloUser = ({ greeted, user, onSayHello }) => (
 
 HelloUser.propTypes = {
   greeted: PropTypes.bool.isRequired,
+  onSayHello: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
     country: PropTypes.shape({
       name: PropTypes.string.isRequired
-    }).isRequired
-  }),
-  onSayHello: PropTypes.func.isRequired
+    }).isRequired,
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired
+  })
 };
 
 const mapStateToProps = state => ({

@@ -16,9 +16,9 @@ const Counter = ({ value, onDecrement, onIncrement }) => (
 );
 
 Counter.propTypes = {
-  value: PropTypes.number.isRequired,
   onDecrement: PropTypes.func.isRequired,
-  onIncrement: PropTypes.func.isRequired
+  onIncrement: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   buildActionCreators({
-    onIncrement: ActionTypes.INCREMENT,
-    onDecrement: ActionTypes.DECREMENT
+    onDecrement: ActionTypes.DECREMENT,
+    onIncrement: ActionTypes.INCREMENT
   })
 )(Counter);

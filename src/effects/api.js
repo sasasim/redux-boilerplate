@@ -1,11 +1,11 @@
 export const fetchUser = () => new Promise(res => setTimeout(() => {
   res({
-    id: 'somespecialuserid',
-    firstName: 'John',
-    lastName: 'Doe',
     country: {
       id: 'us',
       name: 'USA'
-    }
+    },
+    firstName: 'John',
+    id: 'somespecialuserid',
+    lastName: 'Doe'
   });
 }, 500));

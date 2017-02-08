@@ -24,7 +24,7 @@ module.exports = {
       loader: 'url?limit=10000&mimetype=application/font-woff',
       include: path.resolve(__dirname, '../assets')
     }, {
-      test: /\.(ttf|eot|svg|png|jpeg|jpg)$/,
+      test: /\.(eot|jpeg|jpg|png|svg|ttf|webp)$/,
       loader: 'file',
       include: path.resolve(__dirname, '../assets')
     }]

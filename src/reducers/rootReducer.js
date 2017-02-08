@@ -7,7 +7,7 @@ import entityRepository from 'src/reducers/entityRepositoryReducer';
 
 export default combineReducers({
   counter,
-  helloUser,
   entityRepository,
+  helloUser,
   router: router5Reducer
 });
