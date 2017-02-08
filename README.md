@@ -35,7 +35,7 @@ You are strongly encouraged to read & use this styleguide, feel free to file an 
 ### Files & folders
 1. Prefer predefined directory structure, which is flat, we don't want nested folders because it makes reasoning about imports much more difficult
 2. File name must be unique across the whole project, it's good practice to add suffix of file type eg. `counterSaga` and `counterReducer`
-3. Only classes or `React` Components (keep in mind that Containers are also `React` Components) should have the first letter of their filename in upper-case
+3. Only classes or `React` Components (keep in mind that Containers are also `React` Components) should have the first letter of their filename capitalized
 
 ### Imports
 ```javascript
@@ -43,9 +43,9 @@ import library from 'library';
 import nextLibrary, { namedStuffFromNextLibrary } from 'next-library';
 import { namedStuffFromLibrary } from 'another-library';
 
-import DefaultImport from 'components/Component';
-import * as ActionTypes from 'constants/actionTypes';
-import * as Whatever from 'whatever/whatever';
+import DefaultImport from 'src/components/Component';
+import * as ActionTypes from 'src/constants/actionTypes';
+import * as Whatever from 'src/whatever/whatever';
 ```
 
 1. Prefer wildcard imports over named, because it namespaces variables in the scope
@@ -53,7 +53,7 @@ import * as Whatever from 'whatever/whatever';
 3. If possible order group of imports alphabetically by path
 
 ### React Components
-1. Keep all your `react` components within `src/components` folder, use `.js` suffix even though you are technically using JSX
+1. Keep all your `react` components & containers within `src/components` folder, use `.js` suffix even though you are technically using JSX
 
 2. Always name your component before exporting, therefore prefer this:
   ```javascript
@@ -72,7 +72,7 @@ import * as Whatever from 'whatever/whatever';
 
   There are two reasons: the component will have a name in `react` devtools, and it's much easier to add proptypes later even when the component does not currently accept any props
 
-3. Always specify PropTypes and be as specific as possible, therefore using of `PropTypes.object` or `PropTypes.array` is banned, use `PropTypes.shape` and `PropTypes.arrayOf` instead
+3. Always specify PropTypes and be as specific as possible, therefore using of `PropTypes.array` is banned, use `PropTypes.shape` (wherever possible instead of `PropTypes.object`) and `PropTypes.arrayOf` instead
 
 4. Keep in mind that 99% of your props are `required` so don't forget to define them as `isRequired` in the definition
 
@@ -101,7 +101,7 @@ import * as Whatever from 'whatever/whatever';
 
 ### Containers
 
-1. Keep just `connect`ed HOC in the container, the component itself should be imported from `components` folder (root be an exception)
+1. Keep them in the `src/components` folder
 
 2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function 
   ```javascript
@@ -212,9 +212,3 @@ We are using [now.sh](https://zeit.co/now/) for realtime global deployment, all 
 
 Implementation is easy, all we had to do was install `now` via `npm`. Deploy script runs the build script which creates static assets inside `dist/` folder. This folder contains the only non-gitignored file which is `package.json` and this `package.json` is responsible for running static HTTP server. After the application is built, it's just a matter of `now dist/` to get the application online.
 
-
-## Open questions
-
-1. Should we rather prefer React classes over stateless-functions? At the moment, there's no performance benefit when using stateless functions and in fact, statelss function does not even implement pure rendering, therefore the only option to use `shouldComponentUpdate` is to wrap the stateless function into stateful component.
-
-2. Is the flat directory structure good fit for large projects? Does it scale well? Should we somehow namespace it at some point?
