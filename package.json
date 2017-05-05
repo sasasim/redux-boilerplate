@@ -13,14 +13,16 @@
   },
   "homepage": "https://www.salsitasoft.com/",
   "scripts": {
-    "build": "webpack --config ./webpack/webpack.config.prod.js",
+    "postinstall": "npm run test && npm run build",
     "start": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
+    "start:production": "node ./scripts/server.js",
+    "build": "webpack --config ./webpack/webpack.config.prod.js",
     "lint": "eslint src/",
-    "deploy": "npm run build && now ./dist",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "babel-runtime": "^6.18.0",
     "lodash": "^4.16.6",
     "normalizr": "^3.1.0",
@@ -57,7 +59,6 @@
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
     "jest": "^18.1.0",
-    "now": "^3.0.1",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",

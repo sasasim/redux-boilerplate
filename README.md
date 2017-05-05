@@ -103,7 +103,7 @@ import * as Whatever from 'src/whatever/whatever';
 
 1. Keep them in the `src/components` folder
 
-2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function 
+2. For `mapDispatchToProps` use `buildActionCreators` helper. The helper accepts an object where keys are prop names and values types of actions to be dispatched, it automatically generates action creators which dispatch the action of specified type and payload passed to the function
   ```javascript
   const { onClick } = buildActionCreators({
     onClick: 'CLICKED'
@@ -208,7 +208,11 @@ Testing framework is [Jest](https://facebook.github.io/jest/), there's no config
 
 ## Deployment
 
-We are using [now.sh](https://zeit.co/now/) for realtime global deployment, all you have to do to get your current application online is running `npm run deploy`. First time you run the command, you will be prompted for e-mail, just provide the e-mail and then visit the confirmation link you get. From then on, you can deploy the app by running `npm run deploy` and the application gets deployed on random URL (which is going to be copied to your cliboard).
+We are using heroku for realtime global deployment. `postinstall` script runs the unit tests and the build script which creates static assets inside `dist/` folder. Also, deployment will require the following environment variables to be set in your heroku app:
 
-Implementation is easy, all we had to do was install `now` via `npm`. Deploy script runs the build script which creates static assets inside `dist/` folder. This folder contains the only non-gitignored file which is `package.json` and this `package.json` is responsible for running static HTTP server. After the application is built, it's just a matter of `now dist/` to get the application online.
+- `NODE_ENV: true`
+- `NPM_CONFIG_PRODUCTION: false`
 
+## Demo
+
+Application is running on: [http://boilerplate.salsitasoft.com/](http://boilerplate.salsitasoft.com/)
