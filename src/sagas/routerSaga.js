@@ -11,12 +11,17 @@ export function* routerSaga(routingMap) {
     const { payload: { previousRoute, route } } = yield take(actionTypes.TRANSITION_SUCCESS);
     const { toActivate, toDeactivate } = transitionPath(route, previousRoute);
     for (const name of toDeactivate) {
-      yield cancel(routeTasks[name]);
-      delete routeTasks[name];
+      const task = routeTasks[name];
+      if (task) {
+        yield cancel(task);
+        delete routeTasks[name];
+      }
     }
     for (const name of toActivate) {
       const enteredSaga = routingMap[name];
-      routeTasks[name] = yield fork(enteredSaga);
+      if (enteredSaga) {
+        routeTasks[name] = yield fork(enteredSaga);
+      }
     }
   }
 }

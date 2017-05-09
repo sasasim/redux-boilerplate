@@ -8,6 +8,7 @@ const ROUTE1 = 'ROUTE1';
 const ROUTE11 = 'ROUTE1.1';
 const ROUTE2 = 'ROUTE2';
 const ROUTE21 = 'ROUTE2.1';
+const ROUTE3 = 'ROUTE3';
 
 const stub1 = () => {};
 const stub11 = () => {};
@@ -144,5 +145,30 @@ describe('Router Saga', () => {
     expect(it.next(task2).value).toEqual(fork(stub21));
     const task21 = createMockTask();
     expect(it.next(task21).value).toEqual(take(actionTypes.TRANSITION_SUCCESS));
+  });
+
+  it('should go to route without saga', () => {
+    const it = setup();
+    expect(it.next({
+      payload: {
+        route: {
+          name: ROUTE3,
+          meta: { params: {} }
+        }
+      }
+    }).value).toEqual(take(actionTypes.TRANSITION_SUCCESS));
+    expect(it.next({
+      payload: {
+        previousRoute: {
+          name: ROUTE3,
+          meta: { params: {} }
+        },
+        route: {
+          name: ROUTE1,
+          meta: { params: {} }
+        }
+      }
+    }).value).toEqual(fork(stub1));
+    expect(it.next(createMockTask()).value).toEqual(take(actionTypes.TRANSITION_SUCCESS));
   });
 });
