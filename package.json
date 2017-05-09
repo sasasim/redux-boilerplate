@@ -14,8 +14,8 @@
   "homepage": "https://www.salsitasoft.com/",
   "scripts": {
     "postinstall": "npm run test && npm run build",
-    "start": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
-    "start:production": "node ./scripts/server.js",
+    "start:dev": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
+    "start": "node ./scripts/server.js",
     "build": "webpack --config ./webpack/webpack.config.prod.js",
     "lint": "eslint src/",
     "test": "jest",

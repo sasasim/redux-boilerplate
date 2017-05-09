@@ -8,7 +8,7 @@
 git clone git@github.com:salsita/redux-boilerplate.git
 cd redux-boilerplate
 yarn
-npm start
+npm start:dev
 ```
 
 Navigate your browser to http://localhost:3000/
