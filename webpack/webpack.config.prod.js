@@ -1,67 +1,74 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const pkg = require('../package.json');
-const shared = require('./shared.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const packageJson = require('../package.json');
 
-const appName = `${pkg.name}-${pkg.version}`;
-const jsBundleName = `${appName}.min.js`;
-const cssBundleName = `${appName}.min.css`;
-const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
+const appName = packageJson.name;
 
 module.exports = {
-  devtool: 'sourcemap',
-  entry: shared.entry,
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: `/${jsBundleName}`
+  entry: {
+    [appName]: './src/client/main.js'
   },
-  module: Object.assign({}, shared.module, {
-    loaders: shared.module.loaders.map((loader) => {
-      if (loader.id === 'style' || loader.id === 'css') {
-        return Object.assign({}, loader, {
-          loader: ExtractTextPlugin.extract('style', loader.loader.replace('style', ''))
-        });
+  devtool: 'sourcemap',
+  output: {
+    path: path.resolve(__dirname, '../dist/client'),
+    filename: '[name].[hash].js'
+  },
+  module: {
+    rules: [{
+      test: /\.jsx$|\.js$/,
+      include: [
+        path.resolve(__dirname, '../src/client'),
+        path.resolve(__dirname, '../src/server')
+      ],
+      use: { loader: 'babel-loader' }
+    }, {
+      test: /\.css$/,
+      include: path.resolve(__dirname, '../src/styles'),
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader'
+      })
+    }, {
+      test: /\.(sass|scss)$/,
+      include: path.resolve(__dirname, '../src/styles'),
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader!sass-loader'
+      })
+    }, {
+      test: /\.(ttf|eot|svg|png|jpg|jpeg)$/,
+      include: path.resolve(__dirname, '../src/assets'),
+      use: {
+        loader: 'file-loader'
       }
-
-      return loader;
-    })
-  }),
-  resolve: shared.resolve,
+    }]
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: indexHtmlPath,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
     }),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.RUNTIME_ENV': JSON.stringify('client')
+    }),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      },
+      beautify: false,
       mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
         screw_ie8: true
       },
-      output: {
-        comments: false,
-        screw_ie8: true
-      }
+      comments: false,
+      sourceMap: true
     }),
-    new ExtractTextPlugin(cssBundleName)
+    new ExtractTextPlugin('[name].[hash].css'),
+    new HtmlWebpackPlugin({
+      template: 'static/index.html'
+    })
   ]
 };

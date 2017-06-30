@@ -1,38 +1,70 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const pkg = require('../package.json');
-const shared = require('./shared.js');
+const packageJson = require('../package.json');
 
-const bundleName = `${pkg.name}-${pkg.version}.js`;
-const indexHtmlPath = path.resolve(__dirname, '../static/index.html');
-const port = process.env.PORT || 3000;
+const appName = packageJson.name;
 
 module.exports = {
-  debug: true,
-  devtool: 'sourcemap',
-  entry: [
-    `webpack-dev-server/client?http://localhost:${port}`,
-    'webpack/hot/only-dev-server',
-    shared.entry
-  ],
-  output: {
-    path: path.resolve(__dirname, '../'),
-    filename: `/${bundleName}`
+  entry: {
+    [appName]: './src/client/main.js'
   },
-  module: shared.module,
-  resolve: shared.resolve,
-  devServer: {
-    port: port,
-    inline: true,
-    contentBase: path.resolve(__dirname, '../static'),
-    historyApiFallback: true
+  devtool: 'sourcemap',
+  output: { filename: '[name].[hash].js' },
+  module: {
+    rules: [{
+      test: /\.jsx$|\.js$/,
+      include: [
+        path.resolve(__dirname, '../src/client'),
+        path.resolve(__dirname, '../src/server')
+      ],
+      use: {
+        loader: 'babel-loader'
+      }
+    }, {
+      test: /\.css$/,
+      include: path.resolve(__dirname, '../src/styles'),
+      use: [
+        { loader: 'style-loader' },
+        { loader: 'css-loader' }
+      ]
+    }, {
+      test: /\.(sass|scss)$/,
+      include: path.resolve(__dirname, '../src/styles'),
+      use: [
+        { loader: 'style-loader' },
+        { loader: 'css-loader' },
+        { loader: 'sass-loader' }
+      ]
+    }, {
+      test: /\.(ttf|eot|svg|png|jpg|jpeg)$/,
+      include: path.resolve(__dirname, '../src/assets'),
+      use: {
+        loader: 'file-loader'
+      }
+    }]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: indexHtmlPath
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env.RUNTIME_ENV': JSON.stringify('client')
     }),
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'static/index.html'
+    }),
+    new webpack.NamedModulesPlugin()
+  ],
+  devServer: {
+    port: 3000,
+    contentBase: path.resolve(__dirname, '../dist/client'),
+    historyApiFallback: true,
+    hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        secure: false
+      }
+    }
+  }
 };

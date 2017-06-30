@@ -14,16 +14,18 @@
   "homepage": "https://www.salsitasoft.com/",
   "scripts": {
     "postinstall": "npm run test && npm run build",
-    "start:dev": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
-    "start": "node ./scripts/server.js",
-    "build": "webpack --config ./webpack/webpack.config.prod.js",
+    "start:dev": "concurrently \"webpack-dev-server --config ./webpack/webpack.config.dev.js\" \"webpack -w --config ./webpack/webpack.config.backend.js\" \"nodemon dist/server.js\"",
+    "start": "node dist/server.js",
+    "build": "concurrently \"webpack --config ./webpack/webpack.config.prod.js\" \"webpack --config ./webpack/webpack.config.backend.js\"",
     "lint": "eslint src/",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "express": "^4.14.0",
     "babel-runtime": "^6.18.0",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "html-webpack-plugin": "^2.29.0",
     "lodash": "^4.16.6",
     "normalizr": "^3.1.0",
     "react": "^15.3.2",
@@ -40,6 +42,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-loader": "^6.2.7",
@@ -47,7 +50,9 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-salsita": "^0.1.0",
     "babel-preset-stage-2": "^6.18.0",
+    "concurrently": "^3.5.0",
     "css-loader": "^0.26.0",
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^14.0.0",
@@ -55,15 +60,18 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.6.0",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
     "jest": "^18.1.0",
+    "node-sass": "^4.5.3",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^6.0.6",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.5.0"
   }
 }
