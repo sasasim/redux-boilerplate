@@ -8,6 +8,8 @@ const nodeModules = fs
     [module]: `commonjs ${module}`
   }), {});
 
+nodeModules['./stats.json'] = 'commonjs ./stats.json';
+
 module.exports = {
   entry: './src/server/server.js',
   target: 'node',

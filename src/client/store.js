@@ -1,6 +1,5 @@
 /* global devToolsExtension */
 import { createStore, applyMiddleware, compose } from 'redux';
-import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { router5Middleware } from 'redux-router5';
 
@@ -20,10 +19,9 @@ export default function configureStore(router) {
   } else {
     enhancer = applyMiddleware(
       router5Middleware(router),
-      sagaMiddleware,
-      createLogger()
+      sagaMiddleware
     );
-    if (window.devToolsExtension) {
+    if (process.env.RUNTIME_ENV === 'client' && window.devToolsExtension) {
       enhancer = compose(enhancer, devToolsExtension());
     }
   }
