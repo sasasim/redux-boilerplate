@@ -16,30 +16,27 @@ const renderContent = (testRoute) => {
     return <HelloUser />;
   }
 
-  return <NotFound />;
+  throw new Error('Invalid state');
 };
 
-const Index = ({ route: { name } }) => {
-  const testRoute = startsWithSegment(name);
-
-  return (
+const Root = ({ route }) => (
+  <div>
+    <h1>redux-boilerplate</h1>
+    <nav>
+      <Link name={Routes.COUNTER}>Counter</Link>&nbsp;|&nbsp;
+      <Link name={Routes.HELLO_USER}>Hello User</Link>
+    </nav>
     <div>
-      <h1>redux-boilerplate</h1>
-      <nav>
-        <Link name={Routes.COUNTER}>Counter</Link>&nbsp;|&nbsp;
-        <Link name={Routes.HELLO_USER}>Hello User</Link>
-      </nav>
-      <div>
-        {renderContent(testRoute)}
-      </div>
+      {route && renderContent(startsWithSegment(route.name))}
+      {!route && <NotFound />}
     </div>
-  );
-};
+  </div>
+);
 
-Index.propTypes = {
+Root.propTypes = {
   route: PropTypes.shape({
     name: PropTypes.string.isRequired
-  }).isRequired
+  })
 };
 
 const mapStateToProps = state => ({
@@ -48,4 +45,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps
-)(Index);
+)(Root);

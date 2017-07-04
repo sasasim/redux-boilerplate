@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
 const packageJson = require('../package.json');
 
@@ -68,9 +67,6 @@ module.exports = {
       sourceMap: true
     }),
     new ExtractTextPlugin('[name].[hash].css'),
-    new HtmlWebpackPlugin({
-      template: 'static/index.html'
-    }),
     new StatsWriterPlugin({
       filename: '../stats.json',
       transform: data => JSON.stringify({

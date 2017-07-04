@@ -1,12 +1,22 @@
 import express from 'express';
 import compression from 'compression';
 
-import api from './api';
-import serverSideRendering from './serverSideRendering';
+import apiRouter from './api/router';
+import serverSideRendering from './rendering/serverSideRendering';
 
 const server = express();
+
+// gzip compression
 server.use(compression());
-server.use('*', serverSideRendering);
+
+// serving static files
 server.use('/', express.static('./dist/client'));
-server.use('/api/v1', api);
+
+// API router, for serving the API
+server.use('/api/v1', apiRouter);
+
+// Choose appropriate rendering based on your
+// use case
+server.use('*', serverSideRendering);
+
 server.listen(process.env.PORT || 3001);
