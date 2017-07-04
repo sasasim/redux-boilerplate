@@ -41,7 +41,7 @@ exec('mkdir -p dist && printf \'{}\' > dist/stats.json', (err) => {
       if (isSuccessful && !serverRunning) {
         nodemon({
           script: 'dist/server.js',
-          stdout: false
+          stdout: true
         });
 
         serverRunning = true;

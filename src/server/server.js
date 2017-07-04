@@ -1,8 +1,14 @@
 import express from 'express';
 import compression from 'compression';
 
-import apiRouter from './api/router';
-import serverSideRendering from './rendering/serverSideRendering';
+import apiRouter from 'src/server/api/router';
+import serverSideRendering from 'src/server/rendering/serverSideRendering';
+import sequelize from 'src/server/sequelize';
+
+sequelize
+  .authenticate()
+  .then(() => console.log('Connection has been established successfully.'))
+  .catch(err => console.error('Unable to connect to database.', err));
 
 const server = express();
 

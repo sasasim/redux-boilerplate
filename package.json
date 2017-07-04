@@ -27,6 +27,7 @@
     "express": "^4.14.0",
     "lodash": "^4.16.6",
     "normalizr": "^3.1.0",
+    "pg": "^6.4.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^5.0.2",
@@ -37,7 +38,8 @@
     "redux-saga": "^0.14.3",
     "reselect": "^2.5.4",
     "router5": "^4.3.4",
-    "router5.helpers": "^1.2.0"
+    "router5.helpers": "^1.2.0",
+    "sequelize": "^4.2.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
