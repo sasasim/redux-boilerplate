@@ -56,6 +56,7 @@ module.exports = {
     new webpack.NamedModulesPlugin()
   ],
   devServer: {
+    host: '0.0.0.0',
     port: 3000,
     contentBase: path.resolve(__dirname, '../dist/client'),
     historyApiFallback: true,

@@ -1,0 +1,25 @@
+server:
+  container_name: boilerplate
+  build: .
+  dockerfile: Dockerfile
+  expose:
+    - 3000
+  ports:
+    - 3000:3000
+  volumes:
+    - ./src:/home/container/app/src
+    - ./webpack:/home/container/app/webpack
+    - ./static:/home/container/app/static
+  links:
+    - postgres
+  env_file:
+    - ./docker-compose.env
+
+postgres:
+  container_name: postgres
+  image: postgres:9.6.2-alpine
+  volumes:
+    - pgdata:/var/lib/postgresql/data
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
