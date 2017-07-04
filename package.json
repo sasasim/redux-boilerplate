@@ -14,8 +14,9 @@
   "homepage": "https://www.salsitasoft.com/",
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "docker-compose build && docker-compose up",
-    "docker:start:dev": "concurrently \"mkdir -p dist && printf '{}' > dist/stats.json\" \"webpack-dev-server --config ./webpack/webpack.config.dev.js\" \"webpack -w --config ./webpack/webpack.config.backend.js\" \"nodemon dist/server.js\"",
+    "start:dev": "concurrently \"mkdir -p dist && printf '{}' > dist/stats.json\" \"webpack-dev-server --config ./webpack/webpack.config.dev.js\" \"webpack -w --config ./webpack/webpack.config.backend.js\" \"nodemon dist/server.js\"",
+    "docker:build": "docker-compose build",
+    "docker:start": "docker-compose up",
     "lint": "eslint src/",
     "test": "jest",
     "test:watch": "jest --watch"
