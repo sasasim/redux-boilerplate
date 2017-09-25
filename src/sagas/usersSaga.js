@@ -7,14 +7,19 @@ import * as ApiEffects from 'src/effects/api';
 import * as EntityRepositorySaga from 'src/sagas/entityRepositorySaga';
 import * as Schema from '../schema';
 
-export function* onSayHello() {
-  const user = yield call(ApiEffects.fetchUser);
-  const userId = yield call(EntityRepositorySaga.store, user, Schema.UserSchema);
-  yield put(buildAction(ActionTypes.USER_FETCHED, userId));
+export function* onFetchUsers() {
+  try {
+      const users = yield call(ApiEffects.fetchUsers, null);
+      console.info('Users:', users)
+      yield put(buildAction(ActionTypes.FETCH_USERS_SUCCESS, users));
+  } catch (e) {
+      yield put(buildAction(ActionTypes.FETCH_USERS_ERROR, e));
+      return;
+  }  
 }
 
 export default function* () {
   yield [
-    fork(takeEvery, ActionTypes.SAY_HELLO, onSayHello)
+    fork(takeEvery, ActionTypes.FETCH_USERS, onFetchUsers)
   ];
 }
